@@ -28,7 +28,8 @@ urlpatterns = [
     path('clients/create/', ClientCreateView.as_view(), name='client_create'),
     path('clients/<int:pk>/update/', ClientUpdateView.as_view(), name='client_update'),
     path('clients/<int:pk>/delete/', ClientDeleteView.as_view(), name='client_delete'),
-    path('clients/delete-confirm/', ClientDeleteConfirmationView.as_view(), name='client_confirm_delete'),
+    path('clients/delete-confirm/<str:selected_clients>/', ClientDeleteConfirmationView.as_view(),
+         name='client_confirm_delete'),
 
     path('mailings/', MailingListView.as_view(), name='mailing_list'),
     path('mailing_list/', MailingListView.as_view(), name='mailing_list_list'),

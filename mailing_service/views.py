@@ -34,7 +34,7 @@ class ClientListView(ListView):
             selected_clients = list(Client.objects.values_list('pk', flat=True))
 
         if 'delete_selected' in request.POST:
-            return redirect('mailing_service:client_confirm_delete')
+            return redirect('mailing_service:client_confirm_delete', selected_clients=",".join(selected_clients))  # Изменение здесь
 
         return redirect(reverse_lazy('mailing_service:client_list'))
 
@@ -52,21 +52,17 @@ class ClientDeleteConfirmationView(FormView):
     def form_valid(self, form):
         selected_clients = self.request.POST.getlist('selected_clients')
         if selected_clients:
-            # Handle form submission (confirmation)
             Client.objects.filter(pk__in=selected_clients).delete()
             return super().form_valid(form)
         else:
-            # No clients selected, handle this case (redirect, display a message, etc.)
             return HttpResponseRedirect(self.success_url)
 
 
 class ClientDeleteSelectedView(View):
     def post(self, request, *args, **kwargs):
         selected_clients = request.POST.getlist('selected_clients')
-
         if selected_clients:
             Client.objects.filter(pk__in=selected_clients).delete()
-
         return HttpResponseRedirect(reverse_lazy('mailing_service:client_list'))
 
 
