@@ -1,0 +1,30 @@
+├── Django_Spam_Service_2024
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── README.md
+├── mailing_service
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── management
+│   ├── migrations
+│   ├── models.py
+│   ├── service.py
+│   ├── tasks.py
+│   ├── templates
+│   ├── tests.py
+│   ├── urls.py
+│   ├── utils.py
+│   └── views.py
+├── manage.py
+├── poetry.lock
+├── project_structure.txt
+├── pyproject.toml
+└── static
+    ├── assets
+    ├── css
+    └── js

@@ -1,5 +1,4 @@
 # mailing_service/utils.py
-
 from django.core.mail import send_mail
 
 

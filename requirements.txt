@@ -1,0 +1,16 @@
+APScheduler==3.10.4
+asgiref==3.7.2
+beautifulsoup4==4.12.3
+Django==5.0.1
+django-apscheduler==0.6.2
+django-bootstrap4==23.4
+django-bootstrap5==23.4
+django-crispy-forms==2.1
+-e git+https://github.com/EvgeniiErmak/Django_Spam_Service_2024.git@2504b69ff7c70030087706d34c7ff9e848dc11b1#egg=django_spam_service_2024
+psycopg2==2.9.9
+pytz==2023.3.post1
+six==1.16.0
+soupsieve==2.5
+sqlparse==0.4.4
+tzdata==2023.4
+tzlocal==5.2

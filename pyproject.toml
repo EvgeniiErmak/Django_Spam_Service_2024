@@ -12,6 +12,7 @@ psycopg2 = "^2.9.9"
 django-apscheduler = "^0.6.2"
 django-bootstrap4 = "^23.4"
 django-bootstrap5 = "^23.4"
+django-crispy-forms = "^2.1"
 
 
 [build-system]
