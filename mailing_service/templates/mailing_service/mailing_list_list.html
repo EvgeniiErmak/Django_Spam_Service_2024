@@ -1,0 +1,11 @@
+<!-- templates/mailing_service/mailing_list_list.html -->
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<h2>Список рассылок</h2>
+<ul>
+{% for mailing_list in mailing_lists %}
+  <li>{{ mailing_list.name }}</li>
+{% endfor %}
+</ul>
+<a href="{% url 'mailing_list_form' %}">Добавить новый список рассылки</a>
+{% endblock %}

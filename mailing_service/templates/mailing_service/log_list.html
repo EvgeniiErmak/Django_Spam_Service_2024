@@ -1,0 +1,21 @@
+<!-- templates/mailing_service/log_list.html -->
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<h2>Журнал</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Время</th>
+      <th>Сообщение</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for log in logs %}
+    <tr>
+      <td>{{ log.timestamp }}</td>
+      <td>{{ log.message }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

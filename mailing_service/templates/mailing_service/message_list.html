@@ -1,0 +1,11 @@
+<!-- templates/mailing_service/message_list.html -->
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<h2>Список сообщений</h2>
+<ul>
+{% for message in messages %}
+  <li>{{ message.subject }}</li>
+{% endfor %}
+</ul>
+<a href="{% url 'message_form' %}">Добавить новое сообщение</a>
+{% endblock %}

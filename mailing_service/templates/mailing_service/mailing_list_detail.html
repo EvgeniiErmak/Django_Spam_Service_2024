@@ -1,0 +1,7 @@
+<!-- templates/mailing_service/mailing_list_detail.html -->
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<h2>Детали рассылки "{{ mailing.subject }}"</h2>
+<p>Дата создания: {{ mailing.created_at }}</p>
+<p>Содержание: {{ mailing.content }}</p>
+{% endblock %}

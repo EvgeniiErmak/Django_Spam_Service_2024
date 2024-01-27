@@ -1,0 +1,11 @@
+<!-- templates/mailing_service/message_delete.html -->
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<h2>Удаление сообщения</h2>
+<p>Вы уверены, что хотите удалить сообщение "{{ message.subject }}"?</p>
+<form method="post">
+  {% csrf_token %}
+  <input type="submit" value="Удалить">
+  <a href="{% url 'message_list' %}">Отмена</a>
+</form>
+{% endblock %}

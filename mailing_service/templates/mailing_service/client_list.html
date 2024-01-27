@@ -1,0 +1,11 @@
+<!-- templates/mailing_service/client_list.html -->
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<h2>Список клиентов</h2>
+<ul>
+{% for client in clients %}
+  <li>{{ client.name }}</li>
+{% endfor %}
+</ul>
+<a href="{% url 'client_form' %}">Добавить нового клиента</a>
+{% endblock %}

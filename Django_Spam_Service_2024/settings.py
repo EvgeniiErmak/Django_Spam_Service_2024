@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_apscheduler',
     'django_bootstrap5',
     'mailing_service',
     'bootstrap4',
@@ -136,3 +137,22 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py
+
+# Добавьте DjangoJobStore в список JOBSTORES
+APSCHEDULER_JOBSTORES = {
+    'default': {
+        'ENGINE': 'django_apscheduler.jobstores:DjangoJobStore'
+    },
+}
+
+# Добавьте DjangoJobExecution в список MODELS
+APSCHEDULER_MODEL = 'django_apscheduler.models:DjangoJobExecution'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 587  # порт SMTP сервера
+EMAIL_USE_TLS = True  # использовать ли TLS шифрование
+EMAIL_HOST_USER = 'ew.ermack2015@yandex.ru'
+EMAIL_HOST_PASSWORD = 'jzgxnpuoxukrxxez'
