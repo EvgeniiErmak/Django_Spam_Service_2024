@@ -1,6 +1,6 @@
 <!-- templates/mailing_service/mailing_list_detail.html -->
 {% extends 'mailing_service/base.html' %}
-{% block title %}Детали рассылки - Spam Service{% endblock %}
+{% block title %}Детали рассылки - {{ mailing.title }} - Spam Service{% endblock %}
 {% block content %}
     <div class="container mt-5">
         <h2>Детали рассылки "{{ mailing.title }}"</h2>

@@ -1,17 +1,14 @@
 <!-- templates/mailing_service/mailing_delete.html -->
 {% extends 'mailing_service/base.html' %}
-{% block title %}Подтвердить удаление рассылки - Spam Service{% endblock %}
+{% block title %}Подтверждение удаления рассылки - Spam Service{% endblock %}
 {% block content %}
     <div class="container mt-5">
-        <h2>Подтвердить удаление рассылки</h2>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <p>Вы уверены, что хотите удалить выбранные рассылки?</p>
-                <form method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Удалить</button>
-                </form>
-            </div>
-        </div>
+        <h2>Удаление рассылки "{{ mailing.title }}"</h2>
+        <p>Вы уверены, что хотите удалить эту рассылку?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Удалить</button>
+            <a href="{% url 'mailing_service:mailing_list' %}" class="btn btn-secondary">Отмена</a>
+        </form>
     </div>
 {% endblock %}

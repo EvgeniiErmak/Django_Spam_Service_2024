@@ -30,7 +30,11 @@ class ClientDeleteConfirmationForm(forms.ModelForm):
 class MailingForm(forms.ModelForm):
     class Meta:
         model = Mailing
-        fields = ['title', 'content', 'clients', 'start_time', 'end_time']
+        fields = ['title', 'content', 'start_time', 'end_time']
+        widgets = {
+            'start_time': forms.DateTimeInput(attrs={'type': 'datetime-local', 'placeholder': 'YYYY-MM-DDTHH:MM'}),
+            'end_time': forms.DateTimeInput(attrs={'type': 'datetime-local', 'placeholder': 'YYYY-MM-DDTHH:MM'}),
+        }
 
 
 class MessageForm(forms.ModelForm):
