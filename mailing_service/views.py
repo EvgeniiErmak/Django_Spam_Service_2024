@@ -33,8 +33,7 @@ class ClientListView(ListView):
         if 'delete_selected' in request.POST:
             # Проверка наличия выбранных клиентов перед удалением
             if selected_clients:
-                Client.objects.filter(pk__in=selected_clients).delete()
-            return redirect(reverse_lazy('mailing_service:client_list'))  # Перенаправление на список клиентов
+                return redirect(reverse_lazy('mailing_service:client_confirm_delete', args=[','.join(selected_clients)]))  # Перенаправление на страницу подтверждения удаления
 
         return redirect(reverse_lazy('mailing_service:client_list'))
 
@@ -50,20 +49,12 @@ class ClientDeleteConfirmationView(FormView):
     success_url = reverse_lazy('mailing_service:client_list')
 
     def form_valid(self, form):
-        selected_clients = self.request.POST.getlist('selected_clients')
+        selected_clients = self.kwargs['selected_clients'].split(',')
         if selected_clients:
             Client.objects.filter(pk__in=selected_clients).delete()
             return super().form_valid(form)
         else:
             return HttpResponseRedirect(self.success_url)
-
-
-class ClientDeleteSelectedView(View):
-    def post(self, request, *args, **kwargs):
-        selected_clients = request.POST.getlist('selected_clients')
-        if selected_clients:
-            Client.objects.filter(pk__in=selected_clients).delete()
-        return HttpResponseRedirect(reverse_lazy('mailing_service:client_list'))
 
 
 class ClientCreateView(CreateView):
@@ -107,7 +98,7 @@ class ClientDeleteView(DeleteView):
     success_url = reverse_lazy('mailing_service:client_list')
 
     def post(self, request, *args, **kwargs):
-        selected_clients = request.POST.getlist('selected_clients')
+        selected_clients = request.POST.getlist('selected_clients[]')
 
         if 'delete_selected' in request.POST:
             Client.objects.filter(pk__in=selected_clients).delete()
