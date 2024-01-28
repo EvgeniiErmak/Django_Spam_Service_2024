@@ -3,8 +3,8 @@ from django.db import models
 
 
 class Client(models.Model):
-    email = models.EmailField(unique=True)  # Уникальность почты
-    full_name = models.CharField(max_length=100, unique=True)  # Уникальность имени
+    email = models.EmailField(unique=True)
+    full_name = models.CharField(max_length=100, unique=True)
     comment = models.TextField(blank=True)
 
     def __str__(self):
@@ -12,13 +12,25 @@ class Client(models.Model):
 
 
 class Mailing(models.Model):
+    FREQUENCY_CHOICES = [
+        ('daily', 'Раз в день'),
+        ('weekly', 'Раз в неделю'),
+        ('monthly', 'Раз в месяц'),
+    ]
+
+    STATUS_CHOICES = [
+        ('created', 'Создана'),
+        ('started', 'Запущена'),
+        ('completed', 'Завершена'),
+    ]
+
     title = models.CharField(max_length=255)
     content = models.TextField()
     clients = models.ManyToManyField(Client)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    delivery_time = models.DateTimeField(blank=True, null=True)
-    status = models.CharField(max_length=20, choices=[('created', 'Создана'), ('started', 'Запущена'), ('completed', 'Завершена')])
+    frequency = models.CharField(choices=FREQUENCY_CHOICES, default='daily', max_length=20)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
 
     def __str__(self):
         return self.title

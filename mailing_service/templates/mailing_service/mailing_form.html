@@ -18,11 +18,23 @@
                     </div>
                     <div class="form-group">
                         <label for="id_start_time">Дата и время начала рассылки:</label>
-                        {{ form.start_time }}
+                        <input type="datetime-local" class="form-control" id="id_start_time" name="start_time" placeholder="YYYY-MM-DD HH:MM">
                     </div>
                     <div class="form-group">
                         <label for="id_end_time">Дата и время окончания рассылки:</label>
-                        {{ form.end_time }}
+                        <input type="datetime-local" class="form-control" id="id_end_time" name="end_time" placeholder="YYYY-MM-DD HH:MM">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_status">Статус рассылки:</label>
+                        {{ form.status }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_frequency">Периодичность рассылки:</label>
+                        {{ form.frequency }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_clients">Клиенты для рассылки:</label>
+                        {{ form.clients }}
                     </div>
                     <button type="submit" class="btn btn-primary">Создать рассылку</button>
                     <a href="{% url 'mailing_service:mailing_list' %}" class="btn btn-secondary">Отмена</a>

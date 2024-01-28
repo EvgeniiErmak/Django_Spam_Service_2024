@@ -30,11 +30,19 @@ class ClientDeleteConfirmationForm(forms.ModelForm):
 class MailingForm(forms.ModelForm):
     class Meta:
         model = Mailing
-        fields = ['title', 'content', 'start_time', 'end_time']
-        widgets = {
-            'start_time': forms.DateTimeInput(attrs={'type': 'datetime-local', 'placeholder': 'YYYY-MM-DDTHH:MM'}),
-            'end_time': forms.DateTimeInput(attrs={'type': 'datetime-local', 'placeholder': 'YYYY-MM-DDTHH:MM'}),
-        }
+        fields = ['title', 'content', 'clients', 'start_time', 'end_time', 'frequency', 'status']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['clients'].widget.attrs['class'] = 'selectpicker'  # Добавляем класс Bootstrap для стилизации
+
+    def clean(self):
+        cleaned_data = super().clean()
+        start_time = cleaned_data.get('start_time')
+        end_time = cleaned_data.get('end_time')
+
+        if start_time and end_time and start_time > end_time:
+            raise forms.ValidationError("Дата начала не может быть позже даты окончания.")
 
 
 class MessageForm(forms.ModelForm):

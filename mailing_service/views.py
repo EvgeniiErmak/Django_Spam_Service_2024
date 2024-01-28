@@ -145,13 +145,14 @@ class MailingDeleteView(DeleteView):
     template_name = 'mailing_service/mailing_delete.html'
     success_url = reverse_lazy('mailing_service:mailing_list')
 
-    def post(self, request, *args, **kwargs):
-        selected_mailings = request.POST.getlist('selected_mailings')
+    def get_success_url(self):
+        return self.success_url
 
-        if 'delete_selected' in request.POST:
-            Mailing.objects.filter(pk__in=selected_mailings).delete()
-
-        return redirect(reverse_lazy('mailing_service:mailing_list'))
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
 
 
 class MessageListView(ListView):

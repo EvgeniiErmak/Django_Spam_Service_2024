@@ -1,3 +1,4 @@
+<!-- templates/mailing_service/mailing_list.html -->
 {% extends 'mailing_service/base.html' %}
 {% block title %}Список рассылок - Spam Service{% endblock %}
 {% block content %}
@@ -5,13 +6,14 @@
         <h2>Список рассылок</h2>
         <div class="row mt-4">
             <div class="col-md-12">
-                <a href="{% url 'mailing_service:mailing_create' %}" class="btn btn-primary mb-3">Создать рассылку</a>
+                <a href="{% url 'mailing_service:mailing_create' %}" class="btn btn-success mb-3">Создать новую рассылку</a>
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col">Название</th>
                             <th scope="col">Время начала</th>
                             <th scope="col">Время окончания</th>
+                            <th scope="col">Периодичность рассылки</th>
                             <th scope="col">Статус</th>
                             <th scope="col">Действия</th>
                         </tr>
@@ -22,15 +24,16 @@
                                 <td>{{ mailing.title }}</td>
                                 <td>{{ mailing.start_time }}</td>
                                 <td>{{ mailing.end_time }}</td>
+                                <td>{{ mailing.get_frequency_display }}</td>
                                 <td>{{ mailing.get_status_display }}</td>
                                 <td>
-                                    <a href="{% url 'mailing_service:mailing_update' mailing.pk %}" class="btn btn-sm btn-outline-primary">Редактировать</a>
-                                    <a href="{% url 'mailing_service:mailing_delete' mailing.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
+                                    <a href="{% url 'mailing_service:mailing_update' mailing.pk %}" class="btn btn-sm btn-primary">Редактировать</a>
+                                    <a href="{% url 'mailing_service:mailing_delete' mailing.pk %}" class="btn btn-sm btn-danger">Удалить</a>
                                 </td>
                             </tr>
                         {% empty %}
                             <tr>
-                                <td colspan="5">Нет доступных рассылок.</td>
+                                <td colspan="6">Нет доступных рассылок.</td>
                             </tr>
                         {% endfor %}
                     </tbody>
