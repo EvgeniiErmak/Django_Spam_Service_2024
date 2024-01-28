@@ -1,13 +1,11 @@
 # mailing_service/urls.py
 from django.urls import path
 from .views import (
-    HomeView,
-    LogListView,
-    ClientListView,
+    ClientDeleteConfirmationView,
+    ClientDeleteView,
     ClientCreateView,
     ClientUpdateView,
-    ClientDeleteView,
-    ClientDeleteConfirmationView,  # Новое представление
+    ClientListView,
     MailingListView,
     MailingCreateView,
     MailingUpdateView,
@@ -16,6 +14,8 @@ from .views import (
     MessageCreateView,
     MessageUpdateView,
     MessageDeleteView,
+    LogListView,
+    HomeView,
 )
 
 app_name = 'mailing_service'
