@@ -122,6 +122,9 @@ class MailingListView(ListView):
     model = Mailing
     template_name = 'mailing_service/mailing_list.html'
 
+    def get_queryset(self):
+        return Mailing.objects.all()
+
 
 class MailingCreateView(CreateView):
     model = Mailing
@@ -142,10 +145,21 @@ class MailingDeleteView(DeleteView):
     template_name = 'mailing_service/mailing_delete.html'
     success_url = reverse_lazy('mailing_service:mailing_list')
 
+    def post(self, request, *args, **kwargs):
+        selected_mailings = request.POST.getlist('selected_mailings')
+
+        if 'delete_selected' in request.POST:
+            Mailing.objects.filter(pk__in=selected_mailings).delete()
+
+        return redirect(reverse_lazy('mailing_service:mailing_list'))
+
 
 class MessageListView(ListView):
     model = Message
     template_name = 'mailing_service/message_list.html'
+
+    def get_queryset(self):
+        return Message.objects.all()
 
 
 class MessageCreateView(CreateView):
@@ -166,3 +180,11 @@ class MessageDeleteView(DeleteView):
     model = Message
     template_name = 'mailing_service/message_delete.html'
     success_url = reverse_lazy('mailing_service:message_list')
+
+    def post(self, request, *args, **kwargs):
+        selected_messages = request.POST.getlist('selected_messages')
+
+        if 'delete_selected' in request.POST:
+            Message.objects.filter(pk__in=selected_messages).delete()
+
+        return redirect(reverse_lazy('mailing_service:message_list'))
