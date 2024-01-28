@@ -2,7 +2,7 @@
 from .forms import ClientForm, MailingForm, MessageForm, ClientDeleteConfirmationForm
 from .models import Client, Mailing, Message, Log
 from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.db.models import Q
