@@ -1,11 +1,10 @@
 # mailing_service/tasks.py
 from django_apscheduler.jobstores import DjangoJobStore
 from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.triggers.cron import CronTrigger
-from .utils import EmailSender
 
 scheduler = BackgroundScheduler()
 scheduler.add_jobstore(DjangoJobStore(), "default")
+
 
 class EmailTask:
     @classmethod
