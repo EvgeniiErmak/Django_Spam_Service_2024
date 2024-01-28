@@ -6,7 +6,7 @@
 <form method="post">
   {% csrf_token %}
   <input type="hidden" name="selected_clients" value="{{ request.GET.ids }}">
-  <input type="submit" name="delete_selected_confirm" value="Удалить">
-  <a href="{% url 'mailing_service:client_list' %}">Отмена</a>
+  <input type="submit" name="delete_selected_confirm" value="Удалить" class="btn btn-danger"> <!-- Красная кнопка -->
+  <a href="{% url 'mailing_service:client_list' %}" class="btn btn-secondary">Отмена</a> <!-- Серая кнопка -->
 </form>
 {% endblock %}

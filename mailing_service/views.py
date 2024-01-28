@@ -3,7 +3,7 @@ from .forms import ClientForm, MailingForm, MessageForm, ClientDeleteConfirmatio
 from .models import Client, Mailing, Message, Log
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.db.models import Q
 from django.views.generic import (
@@ -92,18 +92,21 @@ class ClientUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ClientDeleteView(DeleteView):
-    model = Client
+class ClientDeleteView(View):
     template_name = 'mailing_service/client_delete.html'
+    form_class = ClientDeleteConfirmationForm
     success_url = reverse_lazy('mailing_service:client_list')
+
+    def get(self, request, *args, **kwargs):
+        selected_clients = request.GET.getlist('selected_clients[]')
+        clients = Client.objects.filter(pk__in=selected_clients)
+        return render(request, self.template_name, {'clients': clients})
 
     def post(self, request, *args, **kwargs):
         selected_clients = request.POST.getlist('selected_clients[]')
-
-        if 'delete_selected' in request.POST:
+        if 'delete' in request.POST:
             Client.objects.filter(pk__in=selected_clients).delete()
-
-        return self.delete(request, *args, **kwargs)
+        return HttpResponseRedirect(self.success_url)
 
 
 class HomeView(TemplateView):
