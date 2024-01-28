@@ -19,7 +19,6 @@ class LogListView(ListView):
     model = Log
     template_name = 'mailing_service/log_list.html'
 
-
 class ClientListView(ListView):
     model = Client
     template_name = 'mailing_service/client_list.html'
@@ -28,13 +27,16 @@ class ClientListView(ListView):
         return Client.objects.all()
 
     def post(self, request, *args, **kwargs):
-        selected_clients = request.POST.getlist('selected_clients')
+        selected_clients = request.POST.getlist('selected_clients[]')
 
         if 'select_all' in request.POST:
             selected_clients = list(Client.objects.values_list('pk', flat=True))
 
         if 'delete_selected' in request.POST:
-            return redirect('mailing_service:client_confirm_delete', selected_clients=",".join(selected_clients))  # Изменение здесь
+            # Проверка наличия выбранных клиентов перед удалением
+            if selected_clients:
+                Client.objects.filter(pk__in=selected_clients).delete()
+            return redirect(reverse_lazy('mailing_service:client_list'))  # Перенаправление на список клиентов
 
         return redirect(reverse_lazy('mailing_service:client_list'))
 
