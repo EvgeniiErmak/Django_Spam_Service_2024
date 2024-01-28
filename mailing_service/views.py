@@ -1,23 +1,21 @@
 # mailing_service/views.py
-from django.shortcuts import redirect
-from django.views.generic import (
-    TemplateView, ListView, CreateView, UpdateView, DeleteView, FormView, View
-)
-from django.urls import reverse_lazy, reverse
-from .models import Client, Mailing, Message, Log
 from .forms import ClientForm, MailingForm, MessageForm, ClientDeleteConfirmationForm
+from .models import Client, Mailing, Message, Log
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy, reverse
+from django.shortcuts import redirect
 from django.contrib import messages
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.views.generic import (
+    TemplateView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+    FormView,
+    ListView,
+    View
+)
 
-
-class HomeView(TemplateView):
-    template_name = 'mailing_service/home.html'
-
-
-class LogListView(ListView):
-    model = Log
-    template_name = 'mailing_service/log_list.html'
 
 class ClientListView(ListView):
     model = Client
@@ -115,6 +113,15 @@ class ClientDeleteView(DeleteView):
             Client.objects.filter(pk__in=selected_clients).delete()
 
         return self.delete(request, *args, **kwargs)
+
+
+class HomeView(TemplateView):
+    template_name = 'mailing_service/home.html'
+
+
+class LogListView(ListView):
+    model = Log
+    template_name = 'mailing_service/log_list.html'
 
 
 class MailingListView(ListView):
