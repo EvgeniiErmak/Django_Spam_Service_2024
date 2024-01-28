@@ -2,7 +2,7 @@
 {% extends 'mailing_service/base.html' %}
 {% block content %}
   <h2>Список клиентов</h2>
-  <form method="post">
+  <form id="client-list-form" method="post">
     {% csrf_token %}
     <table class="table">
       <thead>
@@ -28,7 +28,7 @@
       </tbody>
     </table>
     <div>
-      <input type="button" id="select-all-button" class="btn btn-primary" value="Выбрать всех"> <!-- Кнопка для выбора всех -->
+      <button type="button" id="select-all-button" class="btn btn-primary">Выбрать всех</button>
       <button type="submit" name="delete_selected" class="btn btn-danger">Удалить выбранных</button>
     </div>
   </form>
@@ -42,10 +42,15 @@
       const selectAllButton = document.getElementById('select-all-button');
       const checkboxes = document.querySelectorAll('input[type="checkbox"][name="selected_clients[]"]');
 
+      let selectAll = false; // Флаг для отслеживания состояния "Выбрать всех"
+
       selectAllButton.addEventListener('click', function () {
+        selectAll = !selectAll; // Инвертируем состояние "Выбрать всех"
         checkboxes.forEach(checkbox => {
-          checkbox.checked = true;
+          checkbox.checked = selectAll; // Устанавливаем состояние всех чекбоксов в соответствии с состоянием "Выбрать всех"
         });
+        // Изменяем текст кнопки в зависимости от состояния
+        selectAllButton.textContent = selectAll ? 'Отменить выбор всех' : 'Выбрать всех';
       });
     });
   </script>
