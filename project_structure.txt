@@ -11,11 +11,29 @@
 │   ├── apps.py
 │   ├── forms.py
 │   ├── management
-│   ├── migrations
+│   │   └── commands
 │   ├── models.py
 │   ├── service.py
 │   ├── tasks.py
 │   ├── templates
+│   │   └── mailing_service
+│   │       ├── base.html
+│   │       ├── client_confirm_delete.html
+│   │       ├── client_delete.html
+│   │       ├── client_delete_confirm.html
+│   │       ├── client_form.html
+│   │       ├── client_list.html
+│   │       ├── home.html
+│   │       ├── log_list.html
+│   │       ├── mailing_delete.html
+│   │       ├── mailing_form.html
+│   │       ├── mailing_list.html
+│   │       ├── mailing_list_detail.html
+│   │       ├── mailing_list_form.html
+│   │       ├── mailing_list_list.html
+│   │       ├── message_delete.html
+│   │       ├── message_form.html
+│   │       └── message_list.html
 │   ├── tests.py
 │   ├── urls.py
 │   ├── utils.py
@@ -24,7 +42,4 @@
 ├── poetry.lock
 ├── project_structure.txt
 ├── pyproject.toml
-└── static
-    ├── assets
-    ├── css
-    └── js
+└── requirements.txt
