@@ -132,12 +132,20 @@ class MailingCreateView(CreateView):
     template_name = 'mailing_service/mailing_form.html'
     success_url = reverse_lazy('mailing_service:mailing_list')
 
+    def form_valid(self, form):
+        # Добавьте здесь вашу логику для создания рассылки
+        return super().form_valid(form)
+
 
 class MailingUpdateView(UpdateView):
     model = Mailing
     form_class = MailingForm
     template_name = 'mailing_service/mailing_form.html'
     success_url = reverse_lazy('mailing_service:mailing_list')
+
+    def form_valid(self, form):
+        # Добавьте здесь вашу логику для обновления рассылки
+        return super().form_valid(form)
 
 
 class MailingDeleteView(DeleteView):
