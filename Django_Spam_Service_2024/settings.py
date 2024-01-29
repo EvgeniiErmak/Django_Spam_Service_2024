@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_apscheduler',
     'django_bootstrap5',
     'mailing_service',
+    'django_cron',
     'bootstrap4',
 ]
 
@@ -156,3 +157,7 @@ EMAIL_PORT = 587  # порт SMTP сервера
 EMAIL_USE_TLS = True  # использовать ли TLS шифрование
 EMAIL_HOST_USER = 'ew.ermack2015@yandex.ru'
 EMAIL_HOST_PASSWORD = 'jzgxnpuoxukrxxez'
+
+CRON_CLASSES = [
+    'mailing_service.tasks.SendEmailsCronJob',
+]

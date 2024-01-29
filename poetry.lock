@@ -142,6 +142,20 @@ files = [
 django = ">=4.2"
 
 [[package]]
+name = "django-cron"
+version = "0.6.0"
+description = "Running python crons in a Django project"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-cron-0.6.0.tar.gz", hash = "sha256:dc3c0d3433a2e4e7012f77f6d8415ad90367ba068649db2674325bc36f935841"},
+    {file = "django_cron-0.6.0-py3-none-any.whl", hash = "sha256:016203554748512b7f19d7363b4fde8741c6ff63fe8a15051f3031f4a0506a41"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
 name = "psycopg2"
 version = "2.9.9"
 description = "psycopg2 - Python-PostgreSQL Database Adapter"
@@ -243,4 +257,4 @@ devenv = ["check-manifest", "pytest (>=4.3)", "pytest-cov", "pytest-mock (>=3.3)
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "21c0da6539283bb0c9bfc8510ba7490206e9d4f30e1b1589255be4ffef6ea680"
+content-hash = "9341a548c3d62f87417aadb03b6bff36d5a12ceca9a0d2408819973805bc6e55"
