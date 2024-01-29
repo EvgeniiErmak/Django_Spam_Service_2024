@@ -120,6 +120,11 @@ class HomeView(TemplateView):
 class LogListView(ListView):
     model = Log
     template_name = 'mailing_service/log_list.html'
+    context_object_name = 'logs'
+    paginate_by = 100
+
+    def get_queryset(self):
+        return Log.objects.all().order_by('-attempt_time')
 
 
 class MailingListView(ListView):

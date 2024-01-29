@@ -1,36 +1,52 @@
-<!-- templates/mailing_service/log_list.html -->
+<!-- mailing_service/templates/mailing_service/log_list.html -->
+
 {% extends 'mailing_service/base.html' %}
-{% block title %}Список логов - Spam Service{% endblock %}
+
 {% block content %}
-    <div class="container mt-5">
-        <h2>Список логов</h2>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Сообщение</th>
-                            <th scope="col">Время попытки</th>
-                            <th scope="col">Статус</th>
-                            <th scope="col">Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for log in logs %}
-                            <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
-                                <td>{{ log.message }}</td>
-                                <td>{{ log.attempt_time }}</td>
-                                <td>{{ log.status }}</td>
-                                <td>
-                                    <a href="#" class="btn btn-info btn-sm">Просмотр</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+  <h2>Список логов рассылки</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Название рассылки</th>
+        <th>Дата и время последней попытки</th>
+        <th>Статус попытки</th>
+        <th>Ответ почтового сервера</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for log in logs %}
+        <tr>
+          <td>{{ log.message.mailing.title }}</td>
+          <td>{{ log.attempt_time }}</td>
+          <td>{{ log.status }}</td>
+          <td>{{ log.response }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">Нет доступных логов рассылки.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Навигация по страницам -->
+  {% if is_paginated %}
+  <div class="pagination">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; Первая</a>
+        <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+      {% endif %}
+
+      <span class="current">
+        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+  {% endif %}
 {% endblock %}
