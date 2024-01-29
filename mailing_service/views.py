@@ -4,8 +4,12 @@ from .models import Client, Mailing, Message, Log
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
+from django.http import HttpResponse
+from django.core.mail import send_mail
+from django.conf import settings
 from django.contrib import messages
 from django.db.models import Q
+from .tasks import EmailTask
 from django.views.generic import (
     TemplateView,
     CreateView,
@@ -133,8 +137,12 @@ class MailingCreateView(CreateView):
     success_url = reverse_lazy('mailing_service:mailing_list')
 
     def form_valid(self, form):
-        # Добавьте здесь вашу логику для создания рассылки
-        return super().form_valid(form)
+        result = super().form_valid(form)
+        try:
+            EmailTask.send_emails()  # Запустить рассылку
+        except Exception as e:
+            messages.error(self.request, f'Ошибка при отправке рассылки: {e}')
+        return result
 
 
 class MailingUpdateView(UpdateView):
@@ -144,8 +152,12 @@ class MailingUpdateView(UpdateView):
     success_url = reverse_lazy('mailing_service:mailing_list')
 
     def form_valid(self, form):
-        # Добавьте здесь вашу логику для обновления рассылки
-        return super().form_valid(form)
+        result = super().form_valid(form)
+        try:
+            EmailTask.send_emails()  # Запустить рассылку
+        except Exception as e:
+            messages.error(self.request, f'Ошибка при отправке рассылки: {e}')
+        return result
 
 
 class MailingDeleteView(DeleteView):
@@ -197,3 +209,17 @@ class MessageDeleteView(DeleteView):
             Message.objects.filter(pk__in=selected_messages).delete()
 
         return redirect(reverse_lazy('mailing_service:message_list'))
+
+
+def send_test_email_view(request):
+    try:
+        send_mail(
+            'Тестовое письмо',
+            'Это тестовое письмо от вашего Django-приложения.',
+            settings.EMAIL_HOST_USER,
+            ['recipient@example.com'],  # Замените на реальный адрес получателя
+            fail_silently=False,
+        )
+        return HttpResponse('Тестовое письмо успешно отправлено!')
+    except Exception as e:
+        return HttpResponse(f'Ошибка при отправке тестового письма: {e}')

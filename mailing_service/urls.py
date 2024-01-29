@@ -1,6 +1,7 @@
 # mailing_service/urls.py
 from django.urls import path
 from .views import (
+    send_test_email_view,
     ClientDeleteConfirmationView,
     ClientDeleteView,
     ClientCreateView,
@@ -41,4 +42,6 @@ urlpatterns = [
     path('messages/create/', MessageCreateView.as_view(), name='message_create'),
     path('messages/<int:pk>/update/', MessageUpdateView.as_view(), name='message_update'),
     path('messages/<int:pk>/delete/', MessageDeleteView.as_view(), name='message_delete'),
+
+    path('send-test-email/', send_test_email_view, name='send_test_email'),
 ]
