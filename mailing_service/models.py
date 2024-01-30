@@ -1,5 +1,6 @@
 # mailing_service/models.py
 from django.db import models
+from django.utils import timezone
 
 
 class Client(models.Model):
@@ -27,10 +28,10 @@ class Mailing(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     clients = models.ManyToManyField(Client)
-    start_time = models.DateTimeField()
+    start_time = models.DateTimeField(default=timezone.now)  # По умолчанию - текущее время
     end_time = models.DateTimeField()
     frequency = models.CharField(choices=FREQUENCY_CHOICES, default='daily', max_length=20)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='created')  # По умолчанию - создана
 
     def __str__(self):
         return self.title
@@ -47,7 +48,7 @@ class Message(models.Model):
 
 class Log(models.Model):
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
-    attempt_time = models.DateTimeField()
+    attempt_time = models.DateTimeField(default=timezone.now)  # По умолчанию - текущее время
     status = models.CharField(max_length=50)
     response = models.TextField(blank=True)
 

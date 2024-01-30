@@ -145,7 +145,14 @@ class MailingCreateView(CreateView):
     def form_valid(self, form):
         result = super().form_valid(form)
         try:
-            EmailTask.send_emails()  # Запустить рассылку
+            # Запланировать рассылку для новой рассылки
+            EmailTask.scheduler.add_job(
+                EmailTask.send_emails,
+                'date',
+                run_date=self.object.start_time,  # Запуск по времени начала рассылки
+                args=[self.object.id],  # Передать ID рассылки для отправки
+                timezone='Europe/Moscow'
+            )
         except Exception as e:
             messages.error(self.request, f'Ошибка при отправке рассылки: {e}')
         return result
