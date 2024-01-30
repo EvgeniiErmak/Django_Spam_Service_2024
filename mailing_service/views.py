@@ -238,7 +238,7 @@ def send_test_email_view(request):
             'Тестовое письмо',
             'Это тестовое письмо от вашего Django-приложения.',
             settings.EMAIL_HOST_USER,
-            ['recipient@example.com'],  # Замените на реальный адрес получателя
+            ['djermak3000@mail.ru'],  # Замените на реальный адрес получателя
             fail_silently=False,
         )
         return HttpResponse('Тестовое письмо успешно отправлено!')
