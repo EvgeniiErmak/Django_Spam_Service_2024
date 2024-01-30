@@ -14,7 +14,7 @@ class EmailTask:
     @classmethod
     def start(cls):
         cls.scheduler.start()
-        cls.scheduler.add_job(cls.send_emails, 'cron', hour='*/3', timezone='Europe/Moscow')
+        cls.scheduler.add_job(cls.send_emails, 'cron', hour='*/24', timezone='Europe/Moscow')
 
     @classmethod
     def send_emails(cls):
