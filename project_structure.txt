@@ -1,4 +1,3 @@
-.
 ├── Django_Spam_Service_2024
 │   ├── __init__.py
 │   ├── asgi.py
@@ -45,5 +44,3 @@
 ├── project_structure.txt
 ├── pyproject.toml
 └── requirements.txt
-
-7 directories, 40 files
