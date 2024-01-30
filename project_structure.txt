@@ -1,3 +1,4 @@
+.
 ├── Django_Spam_Service_2024
 │   ├── __init__.py
 │   ├── asgi.py
@@ -26,14 +27,15 @@
 │   │       ├── home.html
 │   │       ├── log_list.html
 │   │       ├── mailing_delete.html
+│   │       ├── mailing_detail.html
 │   │       ├── mailing_form.html
 │   │       ├── mailing_list.html
-│   │       ├── mailing_list_detail.html
 │   │       ├── mailing_list_form.html
 │   │       ├── mailing_list_list.html
 │   │       ├── message_delete.html
 │   │       ├── message_form.html
-│   │       └── message_list.html
+│   │       ├── message_list.html
+│   │       └── sent_mailings_report.html
 │   ├── tests.py
 │   ├── urls.py
 │   ├── utils.py
@@ -43,3 +45,5 @@
 ├── project_structure.txt
 ├── pyproject.toml
 └── requirements.txt
+
+7 directories, 40 files
