@@ -2,6 +2,7 @@
 from .forms import ClientForm, MailingForm, MessageForm, ClientDeleteConfirmationForm
 from .models import Client, Mailing, Message, Log
 from django.http import HttpResponseRedirect
+from django.views.generic import DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
@@ -148,6 +149,12 @@ class MailingCreateView(CreateView):
         except Exception as e:
             messages.error(self.request, f'Ошибка при отправке рассылки: {e}')
         return result
+
+
+class MailingDetailView(DetailView):
+    model = Mailing
+    template_name = 'mailing_service/mailing_detail.html'
+    context_object_name = 'mailing'
 
 
 class MailingUpdateView(UpdateView):

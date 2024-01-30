@@ -11,6 +11,7 @@ from .views import (
     MailingCreateView,
     MailingUpdateView,
     MailingDeleteView,
+    MailingDetailView,  # Импорт нового представления для деталей рассылки
     MessageListView,
     MessageCreateView,
     MessageUpdateView,
@@ -37,6 +38,7 @@ urlpatterns = [
     path('mailings/create/', MailingCreateView.as_view(), name='mailing_create'),
     path('mailings/<int:pk>/update/', MailingUpdateView.as_view(), name='mailing_update'),
     path('mailings/<int:pk>/delete/', MailingDeleteView.as_view(), name='mailing_delete'),
+    path('mailings/<int:pk>/', MailingDetailView.as_view(), name='mailing_detail'),  # URL для деталей рассылки
 
     path('messages/', MessageListView.as_view(), name='message_list'),
     path('messages/create/', MessageCreateView.as_view(), name='message_create'),
