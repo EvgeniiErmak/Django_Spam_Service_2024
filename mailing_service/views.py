@@ -157,6 +157,15 @@ class MailingDetailView(DetailView):
     context_object_name = 'mailing'
 
 
+class SentMailingsReportView(TemplateView):
+    template_name = 'mailing_service/sent_mailings_report.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sent_mailings'] = Mailing.objects.filter(status='completed')
+        return context
+
+
 class MailingUpdateView(UpdateView):
     model = Mailing
     form_class = MailingForm

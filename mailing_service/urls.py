@@ -1,6 +1,7 @@
 # mailing_service/urls.py
 from django.urls import path
 from .views import (
+    SentMailingsReportView,
     send_test_email_view,
     ClientDeleteConfirmationView,
     ClientDeleteView,
@@ -11,7 +12,7 @@ from .views import (
     MailingCreateView,
     MailingUpdateView,
     MailingDeleteView,
-    MailingDetailView,  # Импорт нового представления для деталей рассылки
+    MailingDetailView,
     MessageListView,
     MessageCreateView,
     MessageUpdateView,
@@ -38,7 +39,8 @@ urlpatterns = [
     path('mailings/create/', MailingCreateView.as_view(), name='mailing_create'),
     path('mailings/<int:pk>/update/', MailingUpdateView.as_view(), name='mailing_update'),
     path('mailings/<int:pk>/delete/', MailingDeleteView.as_view(), name='mailing_delete'),
-    path('mailings/<int:pk>/', MailingDetailView.as_view(), name='mailing_detail'),  # URL для деталей рассылки
+    path('mailings/<int:pk>/', MailingDetailView.as_view(), name='mailing_detail'),
+    path('sent-mailings-report/', SentMailingsReportView.as_view(), name='sent_mailings_report'),
 
     path('messages/', MessageListView.as_view(), name='message_list'),
     path('messages/create/', MessageCreateView.as_view(), name='message_create'),
