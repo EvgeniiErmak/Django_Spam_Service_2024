@@ -38,12 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_apscheduler',
-    'django_bootstrap5',
     'mailing_service',
+    'crispy_forms',
     'django_cron',
     'bootstrap4',
     'blog'
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,8 +63,7 @@ ROOT_URLCONF = 'Django_Spam_Service_2024.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,25 +72,31 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'builtins': [
+                'catalog.templatetags.mediapath',
+            ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'Django_Spam_Service_2024.wsgi.application'
+WSGI_APPLICATION = 'Django_Web_Store.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# Настройки базы данных PostgreSQL
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Django_Spam_Service_2024',
+        'NAME': 'Django_Web_Store_base',
         'USER': 'postgres',
         'PASSWORD': '12345',
         'HOST': 'localhost',
         'PORT': '5432',
+        'OPTIONS': {
+            'options': '-c search_path=public',
+            'client_encoding': 'UTF8',  # Используйте 'UTF8' вместо 'utf-8'
+        },
     }
 }
 
@@ -123,15 +131,20 @@ USE_I18N = True
 
 USE_TZ = True
 
+DEFAULT_CHARSET = 'utf-8'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+# Настройки для работы со статическими файлами
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# Настройки для работы с медиафайлами
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -150,15 +163,28 @@ APSCHEDULER_JOBSTORES = {
 # Добавьте DjangoJobExecution в список MODELS
 APSCHEDULER_MODEL = 'django_apscheduler.models:DjangoJobExecution'
 
+# Настройки для работы с электронной почтой.
+# Обратите внимание, что вы должны использовать свой логин, пароль и адрес электронной почты Яндекса.
+# Теперь, когда статья достигнет 100 просмотров, вы получите письмо на указанный вами адрес электронной почты.
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 587  # порт SMTP сервера
-EMAIL_USE_TLS = True  # использовать ли TLS шифрование
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'ew.ermack2015@yandex.ru'
 EMAIL_HOST_PASSWORD = 'jzgxnpuoxukrxxez'
+DEFAULT_FROM_EMAIL = 'ew.ermack2015@yandex.ru'
+SERVER_EMAIL = 'ew.ermack2015@yandex.ru'
+EMAIL_ADMIN = EMAIL_HOST_USER
 
-CRON_CLASSES = [
-    'mailing_service.tasks.SendEmailsCronJob',
+
+AUTH_USER_MODEL = 'users.User'
+LOGIN_URL = 'users:login'
+LOGOUT_URL = 'users:logout'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
 ]
-
-AUTH_USER_MODEL = 'auth.User'

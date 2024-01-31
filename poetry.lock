@@ -100,31 +100,17 @@ django = ">=3.2"
 
 [[package]]
 name = "django-bootstrap4"
-version = "23.4"
+version = "24.1"
 description = "Django extensions by Zostera"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "django-bootstrap4-23.4.tar.gz", hash = "sha256:f7f40ad719c1b20399c804336e56a810abc1dec7ba56257756964c10005916f9"},
-    {file = "django_bootstrap4-23.4-py3-none-any.whl", hash = "sha256:577df4009adc21c8c65b7bfc3cd074c26072e245c43e6183ee0c6ae01181c263"},
+    {file = "django-bootstrap4-24.1.tar.gz", hash = "sha256:948a620a10efc3e091e55571341ae1749a3f6f521f1f031889242b65767b4c04"},
+    {file = "django_bootstrap4-24.1-py3-none-any.whl", hash = "sha256:accc64255af7bb45df6b518673facbbaf572418c26e3c3579a0cf4e9c4ef1183"},
 ]
 
 [package.dependencies]
 beautifulsoup4 = ">=4.8.0"
-Django = ">=3.2"
-
-[[package]]
-name = "django-bootstrap5"
-version = "23.4"
-description = "Bootstrap 5 for Django"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "django-bootstrap5-23.4.tar.gz", hash = "sha256:fbf9942a17e1f48b4142e78df9e85afb65e4066a20e38ec7c497d36ae5ef7256"},
-    {file = "django_bootstrap5-23.4-py3-none-any.whl", hash = "sha256:5181bf1e97afae6211e963f28f48d4a90c937a3b036b3f752f52260f0029f3bc"},
-]
-
-[package.dependencies]
 Django = ">=3.2"
 
 [[package]]
@@ -264,13 +250,13 @@ files = [
 
 [[package]]
 name = "pytz"
-version = "2023.3.post1"
+version = "2023.4"
 description = "World timezone definitions, modern and historical"
 optional = false
 python-versions = "*"
 files = [
-    {file = "pytz-2023.3.post1-py2.py3-none-any.whl", hash = "sha256:ce42d816b81b68506614c11e8937d3aa9e41007ceb50bfdcb0749b921bf646c7"},
-    {file = "pytz-2023.3.post1.tar.gz", hash = "sha256:7b4fddbeb94a1eba4b557da24f19fdf9db575192544270a9101d8509f9f43d7b"},
+    {file = "pytz-2023.4-py2.py3-none-any.whl", hash = "sha256:f90ef520d95e7c46951105338d918664ebfd6f1d995bd7d153127ce90efafa6a"},
+    {file = "pytz-2023.4.tar.gz", hash = "sha256:31d4583c4ed539cd037956140d695e42c033a19e984bfce9964a3f7d59bc2b40"},
 ]
 
 [[package]]
@@ -342,4 +328,4 @@ devenv = ["check-manifest", "pytest (>=4.3)", "pytest-cov", "pytest-mock (>=3.3)
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "ed6e85f343f3670644fe7dcf183f4d4adc3ebd50164f1b9d0bf769463b54a465"
+content-hash = "8c76a6f1ce17457d391e9cf7074f91681da076f895b0a62ae592709f7a50f5d2"
