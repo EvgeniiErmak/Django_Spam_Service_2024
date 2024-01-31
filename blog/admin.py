@@ -6,6 +6,6 @@ from .models import Post
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'publication_date', 'views')
-    search_fields = ('title', 'content')
     list_filter = ('publication_date',)
+    search_fields = ('title', 'content')
     date_hierarchy = 'publication_date'

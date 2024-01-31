@@ -2,36 +2,13 @@
 {% extends "mailing_service/base.html" %}
 
 {% block content %}
-  <h1>{{ post.title }}</h1>
-  <div class="post">
+  <article class="post-detail">
+    <h1>{{ post.title }}</h1>
     {% if post.image %}
-      <img src="{{ post.image.url }}" alt="{{ post.title }}">
+      <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%;">
     {% endif %}
     <p>{{ post.content }}</p>
     <p>Просмотры: {{ post.views }}</p>
     <p>Дата публикации: {{ post.publication_date }}</p>
-    <p>Автор: {{ post.author }}</p> <!-- Добавлено поле автора -->
-  </div>
-
-  <h2>Комментарии</h2>
-  {% for comment in post.comments.all %}
-    {% if comment.approved_comment %}
-      <div class="comment">
-        <p>Автор: {{ comment.author }}</p>
-        <p>{{ comment.text|linebreaks }}</p>
-        <p>Дата: {{ comment.created_date }}</p>
-      </div>
-    {% endif %}
-  {% empty %}
-    <p>Пока нет ни одного комментария.</p>
-  {% endfor %}
-
-  <h2>Добавить комментарий</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Отправить</button>
-  </form>
-
-  <a href="{% url 'blog:post_list' %}" class="btn btn-secondary">Назад</a> <!-- Добавлена кнопка "Назад" -->
+  </article>
 {% endblock %}
