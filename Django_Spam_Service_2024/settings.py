@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'Django_Spam_Service_2024.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Django_Web_Store_base',
+        'NAME': 'Django_Spam_Service_2024',
         'USER': 'postgres',
         'PASSWORD': '12345',
         'HOST': 'localhost',
