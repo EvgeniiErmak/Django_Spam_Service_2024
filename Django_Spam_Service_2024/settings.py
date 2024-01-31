@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_cron',
     'bootstrap4',
-    'users'
-    'blog'
+    'users',
+    'blog',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -74,13 +74,13 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'builtins': [
-                'catalog.templatetags.mediapath',
+                'mailing_service.templatetags.mediapath',
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'Django_Web_Store.wsgi.application'
+WSGI_APPLICATION = 'Django_Spam_Service_2024.wsgi.application'
 
 
 # Database
