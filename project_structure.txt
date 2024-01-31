@@ -1,3 +1,4 @@
+.
 ├── Django_Spam_Service_2024
 │   ├── __init__.py
 │   ├── asgi.py
@@ -5,6 +6,17 @@
 │   ├── urls.py
 │   └── wsgi.py
 ├── README.md
+├── blog
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── models.py
+│   ├── templates
+│   │   └── blog
+│   │       └── post_list.html
+│   ├── tests.py
+│   └── views.py
 ├── mailing_service
 │   ├── __init__.py
 │   ├── admin.py
@@ -44,3 +56,5 @@
 ├── project_structure.txt
 ├── pyproject.toml
 └── requirements.txt
+
+10 directories, 48 files
