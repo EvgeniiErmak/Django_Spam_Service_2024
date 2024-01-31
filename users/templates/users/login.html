@@ -19,6 +19,8 @@
                         <div class="mb-3"></div> <!-- Добавленный элемент с пробелом -->
                         <button type="submit" class="btn btn-outline-primary">Войти</button>
                         <a type="button" class="btn btn-outline-primary" href="{% url 'users:password_reset' %}">Сбросить пароль</a>
+                        <!-- Добавляем кнопку "Зарегистрироваться" -->
+                        <a type="button" class="btn btn-success" href="{% url 'users:register' %}">Зарегистрироваться</a>
                     </form>
                 </div>
             </div>

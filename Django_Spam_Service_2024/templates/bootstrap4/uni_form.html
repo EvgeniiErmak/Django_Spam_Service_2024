@@ -1,0 +1,10 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block crispy %}
+{% if form.helper %}
+    {% crispy form %}
+{% else %}
+    {% crispy form %}
+{% endif %}
+{% endblock %}
