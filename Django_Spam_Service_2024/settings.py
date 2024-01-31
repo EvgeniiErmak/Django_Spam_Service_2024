@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_cron',
     'bootstrap4',
+    'users'
     'blog'
 ]
 
