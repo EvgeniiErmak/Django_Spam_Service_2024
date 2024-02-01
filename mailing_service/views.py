@@ -1,16 +1,17 @@
 # mailing_service/views.py
 from .forms import ClientForm, MailingForm, MessageForm, ClientDeleteConfirmationForm
 from .models import Client, Mailing, Message, Log
+from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView
-from django.urls import reverse_lazy
-from django.shortcuts import redirect, render
-from django.http import HttpResponse
 from django.core.mail import send_mail
+from django.urls import reverse_lazy
+from django.http import HttpResponse
 from django.conf import settings
 from django.contrib import messages
 from django.db.models import Q
 from .tasks import EmailTask
+from blog.models import Post
 from django.views.generic import (
     TemplateView,
     CreateView,
@@ -36,9 +37,8 @@ class ClientListView(ListView):
             selected_clients = list(Client.objects.values_list('pk', flat=True))
 
         if 'delete_selected' in request.POST:
-            # Проверка наличия выбранных клиентов перед удалением
             if selected_clients:
-                return redirect(reverse_lazy('mailing_service:client_confirm_delete', args=[','.join(selected_clients)]))  # Перенаправление на страницу подтверждения удаления
+                return redirect(reverse_lazy('mailing_service:client_confirm_delete', args=[','.join(selected_clients)]))
 
         return redirect(reverse_lazy('mailing_service:client_list'))
 
@@ -251,3 +251,15 @@ def send_test_email_view(request):
         return HttpResponse('Тестовое письмо успешно отправлено!')
     except Exception as e:
         return HttpResponse(f'Ошибка при отправке тестового письма: {e}')
+
+
+class HomeView(TemplateView):
+    template_name = 'mailing_service/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_mailings'] = Mailing.objects.count()  # Количество рассылок всего
+        context['active_mailings'] = Mailing.objects.filter(status='active').count()  # Количество активных рассылок
+        context['unique_clients'] = Client.objects.count()  # Количество уникальных клиентов
+        context['latest_posts'] = Post.objects.order_by('-publication_date')[:3]  # Три последние статьи блога
+        return context
