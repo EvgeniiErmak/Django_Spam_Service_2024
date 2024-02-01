@@ -8,7 +8,7 @@ class PostListView(ListView):
     template_name = 'blog/post_list.html'
     context_object_name = 'posts'
     ordering = ['-publication_date']  # Сортировка по дате публикации
-    paginate_by = 10  # Пагинация (по умолчанию 10 постов на странице)
+    paginate_by = 4  # Пагинация (по умолчанию 4 постов на странице)
 
 
 class PostDetailView(DetailView):

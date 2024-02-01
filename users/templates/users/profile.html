@@ -1,6 +1,7 @@
 <!-- users/templates/users/profile.html -->
 {% extends 'mailing_service/base.html' %}
-{% load static %}
+{% load mediapath %}
+{% load crispy_forms_tags %}
 
 {% block content %}
   <h2>Профиль пользователя: {{ user.username }}</h2>
@@ -25,9 +26,16 @@
     </div>
   </div>
 
-  <a type="button" class="btn btn-primary" href="{% url 'users:profile_update' %}">Редактировать профиль</a>
-  <a type="button" class="btn btn-primary" href="{% url 'mailing_service:home' %}">Вернуться на главную</a>
+  <!-- Кнопка "Редактировать профиль" -->
+  <a class="btn btn-primary" href="{% url 'users:profile_update' %}">Редактировать профиль</a>
+
+  <!-- Кнопка "Вернуться на главную" -->
+  <a class="btn btn-primary" href="{% url 'mailing_service:home' %}">Вернуться на главную</a>
+
+  <!-- Пробел -->
   <div class="mb-3"></div>
+
+  <!-- Кнопка "Выход" -->
   <form action="{% url 'users:logout' %}" method="post">
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">Выход</button>

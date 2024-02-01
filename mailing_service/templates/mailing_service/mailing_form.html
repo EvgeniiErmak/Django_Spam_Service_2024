@@ -1,5 +1,8 @@
 <!-- templates/mailing_service/mailing_form.html -->
 {% extends 'mailing_service/base.html' %}
+{% load mediapath %}
+{% load crispy_forms_tags %}
+
 {% block title %}Создание рассылки - Spam Service{% endblock %}
 {% block content %}
     <div class="container mt-5">
@@ -10,33 +13,34 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="id_title">Название рассылки:</label>
-                        {{ form.title }}
+                        {{ form.title|as_crispy_field }}
                     </div>
                     <div class="form-group">
                         <label for="id_content">Содержание рассылки:</label>
-                        {{ form.content }}
+                        {{ form.content|as_crispy_field }}
                     </div>
                     <div class="form-group">
                         <label for="id_start_time">Дата и время начала рассылки:</label>
-                        <input type="datetime-local" class="form-control" id="id_start_time" name="start_time" placeholder="YYYY-MM-DD HH:MM">
+                        {{ form.start_time|as_crispy_field }}
                     </div>
                     <div class="form-group">
                         <label for="id_end_time">Дата и время окончания рассылки:</label>
-                        <input type="datetime-local" class="form-control" id="id_end_time" name="end_time" placeholder="YYYY-MM-DD HH:MM">
+                        {{ form.end_time|as_crispy_field }}
                     </div>
                     <div class="form-group">
                         <label for="id_status">Статус рассылки:</label>
-                        {{ form.status }}
+                        {{ form.status|as_crispy_field }}
                     </div>
                     <div class="form-group">
                         <label for="id_frequency">Период рассылки:</label>
-                        {{ form.frequency }}
+                        {{ form.frequency|as_crispy_field }}
                     </div>
                     <div class="form-group">
                         <label for="id_clients">Клиенты для рассылки:</label>
-                        {{ form.clients }}
+                        {{ form.clients|as_crispy_field }}
                     </div>
-                    <button type="submit" class="btn btn-primary">Создать рассылку</button>
+                    <br>
+                    <button type="submit" class="btn btn-success">Создать рассылку</button>
                     <a href="{% url 'mailing_service:mailing_list' %}" class="btn btn-secondary">Отмена</a>
                 </form>
             </div>
