@@ -180,7 +180,7 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 
 
 AUTH_USER_MODEL = 'users.User'
-LOGIN_URL = 'users:login'
+LOGIN_URL = 'users:profile'
 LOGOUT_URL = 'users:logout'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'

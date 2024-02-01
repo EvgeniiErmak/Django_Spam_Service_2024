@@ -1,34 +1,35 @@
 <!-- users/templates/users/profile.html -->
 {% extends 'mailing_service/base.html' %}
+{% load static %}
 
 {% block content %}
   <h2>Профиль пользователя: {{ user.username }}</h2>
 
-  <!-- Вся информация о профиле пользователя -->
-  <ul>
-    <li><strong>Имя пользователя:</strong> {{ user.username }}</li>
-    <li><strong>Имя:</strong> {{ user.first_name }}</li>
-    <li><strong>Фамилия:</strong> {{ user.last_name }}</li>
-    <li><strong>Номер телефона:</strong> {{ user.phone }}</li>
-    <li><strong>Страна:</strong> {{ user.country }}</li>
+  <!-- Форма с информацией о профиле пользователя -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Имя пользователя:</strong> {{ user.username }}</li>
+          <li class="list-group-item"><strong>Имя:</strong> {{ user.first_name }}</li>
+          <li class="list-group-item"><strong>Фамилия:</strong> {{ user.last_name }}</li>
+          <li class="list-group-item"><strong>Номер телефона:</strong> {{ user.phone }}</li>
+          <li class="list-group-item"><strong>Страна:</strong> {{ user.country }}</li>
 
-    <!-- Проверка, есть ли у пользователя аватар -->
-    {% if user.avatar %}
-      <li><strong>Аватар:</strong> <img src="{{ user.avatar.url }}" alt="Avatar"></li>
-    {% endif %}
+          <!-- Проверка, есть ли у пользователя аватар -->
+          {% if user.avatar %}
+            <li class="list-group-item"><strong>Аватар:</strong><br> <img src="{{ user.avatar.url }}" alt="Avatar"></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
 
-    <!-- Добавьте остальные поля вашей модели пользователя -->
-  </ul>
-
-  <!-- Кнопка "Редактировать профиль" -->
-  <a class="btn btn-outline-primary" href="{% url 'users:profile_update' %}">Редактировать профиль</a>
-
-  <!-- Кнопка "Выход" -->
+  <a type="button" class="btn btn-primary" href="{% url 'users:profile_update' %}">Редактировать профиль</a>
+  <a type="button" class="btn btn-primary" href="{% url 'mailing_service:home' %}">Вернуться на главную</a>
+  <div class="mb-3"></div>
   <form action="{% url 'users:logout' %}" method="post">
     {% csrf_token %}
-    <button type="submit" class="btn btn-outline-danger">Выход</button>
+    <button type="submit" class="btn btn-danger">Выход</button>
   </form>
-
-  <!-- Кнопка "Вернуться на главную" -->
-  <a class="btn btn-outline-primary" href="{% url 'mailing_service:home' %}">Вернуться на главную</a>
 {% endblock %}

@@ -139,6 +139,7 @@ class PasswordResetCompleteView(TemplateView):
 
 class CustomLoginView(LoginView):
     template_name = 'users/login.html'
+    success_url = reverse_lazy('users:profile')
 
 
 class LogoutView(DjangoLogoutView):
