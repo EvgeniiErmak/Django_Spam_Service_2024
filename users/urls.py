@@ -1,8 +1,10 @@
 # users/urls.py
 from users.views import RegisterView, verify_view, EmailVerifyView
 from .views import ProfileView, ProfileUpdateView
+from django.conf.urls.static import static
 from django.urls import path, reverse_lazy
 from users.apps import UsersConfig
+from django.conf import settings
 from django.contrib.auth.views import (
     PasswordResetCompleteView,
     PasswordResetConfirmView,
@@ -39,3 +41,6 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name='profile'),
     path('profile/update/', ProfileUpdateView.as_view(), name='profile_update'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
