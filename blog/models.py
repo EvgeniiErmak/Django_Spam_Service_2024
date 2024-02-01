@@ -1,6 +1,7 @@
 # blog/models.py
-from django.db import models
 from django.utils import timezone
+from django.db import models
+from PIL import Image
 
 
 class Post(models.Model):
@@ -12,3 +13,20 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            # Проверяем, было ли изображение изменено
+            try:
+                this = Post.objects.get(id=self.id)
+                if this.image != self.image:
+                    self.image.delete(save=False)  # Удаляем старое изображение
+            except: pass
+
+            # Масштабируем изображение
+            img = Image.open(self.image)
+            output_size = (500, 500)  # Установите желаемый размер
+            img.thumbnail(output_size)
+            img.save(self.image.path)
+
+        super().save(*args, **kwargs)
