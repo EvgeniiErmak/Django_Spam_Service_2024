@@ -1,6 +1,5 @@
 # users/models.py
-from django.contrib.auth.models import AbstractUser, Permission, User
-from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import AbstractUser, User
 from django.db import models
 
 NULLABLE = {'blank': True, 'null': True}
