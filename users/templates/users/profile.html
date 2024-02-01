@@ -23,6 +23,12 @@
   <!-- Кнопка "Редактировать профиль" -->
   <a class="btn btn-outline-primary" href="{% url 'users:profile_update' %}">Редактировать профиль</a>
 
+  <!-- Кнопка "Выход" -->
+  <form action="{% url 'users:logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-outline-danger">Выход</button>
+  </form>
+
   <!-- Кнопка "Вернуться на главную" -->
   <a class="btn btn-outline-primary" href="{% url 'mailing_service:home' %}">Вернуться на главную</a>
 {% endblock %}
