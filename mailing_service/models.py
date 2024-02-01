@@ -2,7 +2,6 @@
 from django.db import models
 from django.utils import timezone
 
-
 class Client(models.Model):
     email = models.EmailField(unique=True)
     full_name = models.CharField(max_length=100, unique=True)
@@ -35,6 +34,26 @@ class Mailing(models.Model):
 
     def __str__(self):
         return self.title
+
+    def set_created_status(self):
+        self.status = 'created'
+        self.save()
+
+    def set_started_status(self):
+        self.status = 'started'
+        self.save()
+
+    def set_completed_status(self):
+        self.status = 'completed'
+        self.save()
+
+    def activate_mailing(self):
+        self.start_time = timezone.now()
+        self.set_started_status()
+
+    def complete_mailing(self):
+        self.end_time = timezone.now()
+        self.set_completed_status()
 
 
 class Message(models.Model):
