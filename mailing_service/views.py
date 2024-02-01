@@ -114,10 +114,6 @@ class ClientDeleteView(View):
         return HttpResponseRedirect(self.success_url)
 
 
-class HomeView(TemplateView):
-    template_name = 'mailing_service/home.html'
-
-
 class LogListView(ListView):
     model = Log
     template_name = 'mailing_service/log_list.html'
@@ -262,4 +258,5 @@ class HomeView(TemplateView):
         context['active_mailings'] = Mailing.objects.filter(status='active').count()  # Количество активных рассылок
         context['unique_clients'] = Client.objects.count()  # Количество уникальных клиентов
         context['latest_posts'] = Post.objects.order_by('-publication_date')[:3]  # Три последние статьи блога
+        context['most_viewed_posts'] = Post.objects.order_by('-views')[:3]  # Три самые просматриваемые статьи блога
         return context
