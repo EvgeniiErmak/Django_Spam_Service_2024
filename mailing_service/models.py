@@ -2,6 +2,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class Client(models.Model):
     email = models.EmailField(unique=True)
     full_name = models.CharField(max_length=100, unique=True)
@@ -28,7 +29,7 @@ class Mailing(models.Model):
     content = models.TextField()
     clients = models.ManyToManyField(Client)
     start_time = models.DateTimeField(default=timezone.now)  # По умолчанию - текущее время
-    end_time = models.DateTimeField()
+    end_time = models.DateTimeField(blank=True, null=True)   # Поле может быть пустым
     frequency = models.CharField(choices=FREQUENCY_CHOICES, default='daily', max_length=20)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='created')  # По умолчанию - создана
 

@@ -1,5 +1,7 @@
 <!-- templates/mailing_service/mailing_list.html -->
 {% extends 'mailing_service/base.html' %}
+{% load crispy_forms_tags %}
+
 {% block title %}Список рассылок - Spam Service{% endblock %}
 {% block content %}
     <div class="container mt-5">
@@ -29,7 +31,7 @@
                                 <td>
                                     <a href="{% url 'mailing_service:mailing_update' mailing.pk %}" class="btn btn-sm btn-primary">Редактировать</a>
                                     <a href="{% url 'mailing_service:mailing_delete' mailing.pk %}" class="btn btn-sm btn-danger">Удалить</a>
-                                    <a href="{% url 'mailing_service:mailing_detail' mailing.pk %}" class="btn btn-sm btn-info">Подробно</a> <!-- Добавленная кнопка "Подробно" -->
+                                    <a href="{% url 'mailing_service:mailing_detail' mailing.pk %}" class="btn btn-sm btn-info">Подробно</a>
                                 </td>
                             </tr>
                         {% empty %}

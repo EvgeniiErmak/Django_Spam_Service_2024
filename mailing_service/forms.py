@@ -34,7 +34,8 @@ class MailingForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['clients'].widget.attrs['class'] = 'selectpicker'  # Добавляем класс Bootstrap для стилизации
+        self.fields['start_time'].widget.attrs['class'] = 'datetimepicker'  # Добавляем класс для использования встроенного календаря и часов
+        self.fields['end_time'].widget.attrs['class'] = 'datetimepicker'  # Добавляем класс для использования встроенного календаря и часов
 
     def clean(self):
         cleaned_data = super().clean()
