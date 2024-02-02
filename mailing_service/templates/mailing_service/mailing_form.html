@@ -1,89 +1,45 @@
 <!-- templates/mailing_service/mailing_form.html -->
 {% extends 'mailing_service/base.html' %}
-{% load static %}
-
 {% block title %}Создание рассылки - Spam Service{% endblock %}
-
-{% block extra_css %}
-    {{ block.super }}
-    <!-- Добавляем стили для календаря -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
-{% endblock %}
-
 {% block content %}
-<div class="container mt-5">
-    <h2>Создание рассылки</h2>
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <form method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="id_title">Название рассылки:</label>
-                    <input type="text" class="form-control" id="id_title" name="title">
-                </div>
-                <div class="form-group">
-                    <label for="id_content">Содержание рассылки:</label>
-                    <textarea class="form-control" id="id_content" name="content"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="id_start_time">Дата и время начала рассылки:</label>
-                    <input type="text" class="form-control" id="id_start_time" name="start_time">
-                    <script>
-                        $(function() {
-                            $('#id_start_time').daterangepicker({
-                                singleDatePicker: true,
-                                timePicker: true,
-                                timePicker24Hour: true,
-                                locale: {
-                                    format: 'YYYY-MM-DD HH:mm:ss'
-                                }
-                            });
-                        });
-                    </script>
-                </div>
-                <div class="form-group">
-                    <label for="id_end_time">Дата и время окончания рассылки:</label>
-                    <input type="text" class="form-control" id="id_end_time" name="end_time">
-                    <script>
-                        $(function() {
-                            $('#id_end_time').daterangepicker({
-                                singleDatePicker: true,
-                                timePicker: true,
-                                timePicker24Hour: true,
-                                locale: {
-                                    format: 'YYYY-MM-DD HH:mm:ss'
-                                }
-                            });
-                        });
-                    </script>
-                </div>
-                <div class="form-group">
-                    <label for="id_status">Статус рассылки:</label>
-                    <select class="form-control" id="id_status" name="status">
-                        <option value="created">Создана</option>
-                        <option value="started">Запущена</option>
-                        <option value="completed">Завершена</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="id_frequency">Период рассылки:</label>
-                    <select class="form-control" id="id_frequency" name="frequency">
-                        <option value="daily">Раз в день</option>
-                        <option value="weekly">Раз в неделю</option>
-                        <option value="monthly">Раз в месяц</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="id_clients">Клиенты для рассылки:</label>
-                    <select multiple class="form-control" id="id_clients" name="clients">
-                        <!-- Вставьте сюда код для отображения клиентов -->
-                    </select>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-success">Создать рассылку</button>
-                <a href="{% url 'mailing_service:mailing_list' %}" class="btn btn-secondary">Отмена</a>
-            </form>
+    <div class="container mt-5">
+        <h2>Создание рассылки</h2>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_title">Название рассылки:</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_content">Содержание рассылки:</label>
+                        {{ form.content }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_start_time">Дата и время начала рассылки:</label>
+                        <input type="datetime-local" class="form-control" id="id_start_time" name="start_time" placeholder="YYYY-MM-DD HH:MM">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_end_time">Дата и время окончания рассылки:</label>
+                        <input type="datetime-local" class="form-control" id="id_end_time" name="end_time" placeholder="YYYY-MM-DD HH:MM">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_status">Статус рассылки:</label>
+                        {{ form.status }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_frequency">Период рассылки:</label>
+                        {{ form.frequency }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_clients">Клиенты для рассылки:</label>
+                        {{ form.clients }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Создать рассылку</button>
+                    <a href="{% url 'mailing_service:mailing_list' %}" class="btn btn-secondary">Отмена</a>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
