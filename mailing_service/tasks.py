@@ -8,8 +8,8 @@ from .utils import EmailSender
 
 
 class EmailTask:
-    scheduler = BackgroundScheduler()
-    scheduler.add_jobstore(DjangoJobStore(), "default")
+    #scheduler = BackgroundScheduler()
+    #scheduler.add_jobstore(DjangoJobStore(), "default")
 
     @classmethod
     def start(cls):
@@ -17,6 +17,7 @@ class EmailTask:
 
     @classmethod
     def send_emails(cls, mailing_id):
+        print (123)
         current_time = timezone.now()
         try:
             mailing = Mailing.objects.get(id=mailing_id)
