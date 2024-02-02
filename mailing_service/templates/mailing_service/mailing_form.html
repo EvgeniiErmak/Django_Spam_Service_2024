@@ -29,10 +29,34 @@
                 <div class="form-group">
                     <label for="id_start_time">Дата и время начала рассылки:</label>
                     {{ form.start_time|as_crispy_field }}
+                    <script>
+                        $(function() {
+                            $('#id_start_time').daterangepicker({
+                                singleDatePicker: true,
+                                timePicker: true,
+                                timePicker24Hour: true,
+                                locale: {
+                                    format: 'YYYY-MM-DD HH:mm:ss'
+                                }
+                            });
+                        });
+                    </script>
                 </div>
                 <div class="form-group">
                     <label for="id_end_time">Дата и время окончания рассылки:</label>
                     {{ form.end_time|as_crispy_field }}
+                    <script>
+                        $(function() {
+                            $('#id_end_time').daterangepicker({
+                                singleDatePicker: true,
+                                timePicker: true,
+                                timePicker24Hour: true,
+                                locale: {
+                                    format: 'YYYY-MM-DD HH:mm:ss'
+                                }
+                            });
+                        });
+                    </script>
                 </div>
                 <div class="form-group">
                     <label for="id_status">Статус рассылки:</label>
@@ -53,30 +77,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block extra_js %}
-    {{ block.super }}
-    <!-- Добавляем скрипт для календаря -->
-    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#id_start_time').daterangepicker({
-                singleDatePicker: true,
-                timePicker: true,
-                timePicker24Hour: true,
-                locale: {
-                    format: 'YYYY-MM-DD HH:mm:ss'
-                }
-            });
-            $('#id_end_time').daterangepicker({
-                singleDatePicker: true,
-                timePicker: true,
-                timePicker24Hour: true,
-                locale: {
-                    format: 'YYYY-MM-DD HH:mm:ss'
-                }
-            });
-        });
-    </script>
 {% endblock %}
