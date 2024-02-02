@@ -1,6 +1,6 @@
 # mailing_service/tasks.py
-from django_apscheduler.jobstores import DjangoJobStore
 from apscheduler.schedulers.background import BackgroundScheduler
+from django_apscheduler.jobstores import DjangoJobStore
 from Django_Spam_Service_2024 import settings
 from .models import Mailing, Message, Log
 from django.utils import timezone
@@ -8,8 +8,8 @@ from .utils import EmailSender
 
 
 class EmailTask:
-    #scheduler = BackgroundScheduler()
-    #scheduler.add_jobstore(DjangoJobStore(), "default")
+    scheduler = BackgroundScheduler()
+    scheduler.add_jobstore(DjangoJobStore(), "default")
 
     @classmethod
     def start(cls):
@@ -17,7 +17,7 @@ class EmailTask:
 
     @classmethod
     def send_emails(cls, mailing_id):
-        print (123)
+        print(123)
         current_time = timezone.now()
         try:
             mailing = Mailing.objects.get(id=mailing_id)

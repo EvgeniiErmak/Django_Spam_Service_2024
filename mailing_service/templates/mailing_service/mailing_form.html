@@ -1,4 +1,4 @@
-<!-- templates/mailing_service/mailing_form.html -->
+# templates/mailing_service/mailing_form.html
 {% extends 'mailing_service/base.html' %}
 {% load static %}
 {% load mediapath %}
@@ -34,6 +34,10 @@
                     <div class="form-group">
                         <label for="id_frequency">Период рассылки:</label>
                         {{ form.frequency }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_time_of_day">Время выполнения рассылки:</label>
+                        {{ form.time_of_day }}
                     </div>
                     <div class="form-group">
                         <label for="id_clients">Клиенты для рассылки:</label>

@@ -28,13 +28,15 @@ class Mailing(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     clients = models.ManyToManyField(Client)
-    start_time = models.DateTimeField(default=timezone.now)  # По умолчанию - текущее время
-    end_time = models.DateTimeField(blank=True, null=True)   # Поле может быть пустым
+    start_time = models.DateTimeField(default=timezone.now)
+    end_time = models.DateTimeField(blank=True, null=True)
     frequency = models.CharField(choices=FREQUENCY_CHOICES, default='daily', max_length=20)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='created')  # По умолчанию - создана
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='created')
+    time_of_day = models.TimeField()
 
     def __str__(self):
         return self.title
+
 
     def set_created_status(self):
         self.status = 'created'

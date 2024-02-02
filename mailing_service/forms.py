@@ -30,12 +30,13 @@ class ClientDeleteConfirmationForm(forms.ModelForm):
 class MailingForm(forms.ModelForm):
     class Meta:
         model = Mailing
-        fields = ['title', 'content', 'clients', 'start_time', 'end_time', 'frequency', 'status']
+        fields = ['title', 'content', 'clients', 'start_time', 'end_time', 'frequency', 'status', 'time_of_day']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['start_time'].widget.attrs['class'] = 'datetimepicker'  # Добавляем класс для использования встроенного календаря и часов
-        self.fields['end_time'].widget.attrs['class'] = 'datetimepicker'  # Добавляем класс для использования встроенного календаря и часов
+        self.fields['start_time'].widget.attrs['class'] = 'datetimepicker'
+        self.fields['end_time'].widget.attrs['class'] = 'datetimepicker'
+        self.fields['time_of_day'].widget.attrs['class'] = 'form-control'  # Добавляем класс для использования встроенного календаря и часов
 
     def clean(self):
         cleaned_data = super().clean()

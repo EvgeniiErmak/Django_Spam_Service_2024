@@ -39,6 +39,7 @@ sqlparse = "0.4.3"
 urllib3 = "1.26.12"
 asgiref = "^3.7.2"
 pytils = "^0.4.1"
+tasks = "^2.8.0"
 
 
 [build-system]

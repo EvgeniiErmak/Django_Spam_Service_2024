@@ -229,6 +229,17 @@ ssh = ["bcrypt (>=3.1.5)"]
 test = ["hypothesis (>=1.11.4,!=3.79.2)", "iso8601", "pretend", "pytest (>=6.2.0)", "pytest-benchmark", "pytest-cov", "pytest-subtests", "pytest-xdist", "pytz"]
 
 [[package]]
+name = "datadispatch"
+version = "1.0.0"
+description = "Like functools.singledispatch but for values"
+optional = false
+python-versions = "*"
+files = [
+    {file = "datadispatch-1.0.0-py3-none-any.whl", hash = "sha256:527ad534881d7f6144a8ff643c260a3d2ae0d50e8ee24ec4b0fdae72d6c7beab"},
+    {file = "datadispatch-1.0.0.tar.gz", hash = "sha256:3c0456934e99f21137332deebbda05713dc07fcb142dfc01ef83d6b17aeaf08e"},
+]
+
+[[package]]
 name = "decorator"
 version = "5.1.1"
 description = "Decorators for Humans"
@@ -933,6 +944,20 @@ pure-eval = "*"
 tests = ["cython", "littleutils", "pygments", "pytest", "typeguard"]
 
 [[package]]
+name = "tasks"
+version = "2.8.0"
+description = "A simple personal task queue to track todo items"
+optional = false
+python-versions = "*"
+files = [
+    {file = "tasks-2.8.0-py3-none-any.whl", hash = "sha256:94b6a20b2790717102e194d8ae2da5a84ee0cf509589f37d4192328237a9053a"},
+    {file = "tasks-2.8.0.tar.gz", hash = "sha256:0f145014df82f27e965ed2453225fc6dca6430c4fb7492a819125de53f8657d0"},
+]
+
+[package.dependencies]
+datadispatch = "*"
+
+[[package]]
 name = "traitlets"
 version = "5.14.1"
 description = "Traitlets Python configuration system"
@@ -1005,4 +1030,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "45d3767096ed3c03ba1b634534e8cb5f987d6f3711681eff0529c0cc65fc4103"
+content-hash = "1efa7cf68b40eb4223efe70eb2f7e50408609de08f1e6e38902b7184760c54f4"
