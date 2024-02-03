@@ -1,4 +1,4 @@
-# templates/mailing_service/mailing_form.html
+<!-- templates/mailing_service/mailing_form.html -->
 {% extends 'mailing_service/base.html' %}
 {% load static %}
 {% load mediapath %}
@@ -21,11 +21,11 @@
                     </div>
                     <div class="form-group">
                         <label for="id_start_time">Дата и время начала рассылки:</label>
-                        <input type="datetime-local" class="form-control" id="id_start_time" name="start_time" placeholder="YYYY-MM-DD HH:MM">
+                        {{ form.start_time }}
                     </div>
                     <div class="form-group">
                         <label for="id_end_time">Дата и время окончания рассылки:</label>
-                        <input type="datetime-local" class="form-control" id="id_end_time" name="end_time" placeholder="YYYY-MM-DD HH:MM">
+                        {{ form.end_time }}
                     </div>
                     <div class="form-group">
                         <label for="id_status">Статус рассылки:</label>
@@ -49,4 +49,22 @@
             </div>
         </div>
     </div>
+    <script>
+        $(function () {
+            $('.datetimepicker').datetimepicker({
+                format: 'HH:mm',  // Формат времени
+                icons: {
+                    time: 'far fa-clock',  // Иконка часов
+                    date: 'far fa-calendar',  // Иконка календаря
+                    up: 'fas fa-arrow-up',  // Иконка вверх
+                    down: 'fas fa-arrow-down',  // Иконка вниз
+                    previous: 'fas fa-chevron-left',  // Иконка предыдущего
+                    next: 'fas fa-chevron-right',  // Иконка следующего
+                    today: 'fas fa-calendar-day',  // Иконка сегодня
+                    clear: 'far fa-trash-alt',  // Иконка очистки
+                    close: 'far fa-times'  // Иконка закрытия
+                }
+            });
+        });
+    </script>
 {% endblock %}
