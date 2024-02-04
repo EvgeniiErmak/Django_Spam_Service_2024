@@ -36,6 +36,10 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'mailing_service:sent_mailings_report' %}">Отчёт проведённых рассылок</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'mailing_service:log_list' %}">Список логов</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'users:profile' %}">Личный кабинет</a></li>
+                    {% if user.is_authenticated and has_perm_can_view_dashboard %}
+                        <!-- Ссылка на страницу модератора -->
+                   <li class="nav-item"><a class="nav-link" href="{% url 'users:moderator_dashboard' %}">Панель модератора</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

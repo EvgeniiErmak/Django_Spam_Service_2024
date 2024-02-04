@@ -5,7 +5,6 @@ from django.views.generic import CreateView, TemplateView
 from django.utils.http import urlsafe_base64_decode
 from django.core.exceptions import ValidationError
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render, redirect
 from users.models import User, UserProfile
 from users.forms import UserRegisterForm
 from users.utils import register_confirm
@@ -14,6 +13,44 @@ from django.urls import reverse_lazy
 from .forms import UserProfileForm
 from django.conf import settings
 from django.views import View
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+
+
+class ModeratorDashboardView(PermissionRequiredMixin, View):
+    # Устанавливаем необходимые разрешения для модератора
+    permission_required = 'users.can_view_dashboard'
+
+    def get(self, request):
+        # Получаем список всех пользователей
+        users = User.objects.all()
+        # Передаем значение has_perm в контекст шаблона
+        return render(request, 'users/moderator_dashboard.html', {'users': users, 'has_perm_can_view_dashboard': request.user.has_perm('users.can_view_dashboard')})
+
+    def post(self, request):
+        # Получаем список всех пользователей
+        users = User.objects.all()
+
+        # Проверяем, был ли передан POST-запрос для блокировки пользователя
+        if 'block_user' in request.POST:
+            user_id = request.POST.get('user_id')
+            user = get_object_or_404(User, id=user_id)
+            user.is_active = False
+            user.save()
+            # После блокировки пользователя перенаправляем на страницу с пользователями
+            return redirect(reverse('users:moderator_dashboard'))
+
+        # Проверяем, был ли передан POST-запрос для разблокировки пользователя
+        elif 'unblock_user' in request.POST:
+            user_id = request.POST.get('user_id')
+            user = get_object_or_404(User, id=user_id)
+            user.is_active = True
+            user.save()
+            # После разблокировки пользователя перенаправляем на страницу с пользователями
+            return redirect(reverse('users:moderator_dashboard'))
+
+        return render(request, 'users/moderator_dashboard.html', {'users': users})
 
 
 class ProfileView(View):

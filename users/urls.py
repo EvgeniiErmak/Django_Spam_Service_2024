@@ -1,6 +1,6 @@
 # users/urls.py
 from users.views import RegisterView, verify_view, EmailVerifyView
-from .views import ProfileView, ProfileUpdateView
+from .views import ProfileView, ProfileUpdateView, ModeratorDashboardView
 from django.conf.urls.static import static
 from django.urls import path, reverse_lazy
 from users.apps import UsersConfig
@@ -40,6 +40,8 @@ urlpatterns = [
          name='password_reset_complete'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('profile/update/', ProfileUpdateView.as_view(), name='profile_update'),
+
+    path('moderator_dashboard/', ModeratorDashboardView.as_view(), name='moderator_dashboard'),
 ]
 
 if settings.DEBUG:
