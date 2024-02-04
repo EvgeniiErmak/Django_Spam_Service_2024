@@ -1,19 +1,19 @@
 # users/views.py
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, LogoutView as DjangoLogoutView
 from django.contrib.auth.tokens import default_token_generator as token_generator
-from django.core.exceptions import ValidationError
+from django.views.generic import CreateView, TemplateView
 from django.utils.http import urlsafe_base64_decode
+from django.core.exceptions import ValidationError
 from django.contrib.auth.views import LoginView
-from django.views import View
-from django.conf import settings
+from django.shortcuts import render, redirect
+from users.models import User, UserProfile
+from users.forms import UserRegisterForm
+from users.utils import register_confirm
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
-from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, LogoutView as DjangoLogoutView
-from django.views.generic import CreateView, TemplateView
-from django.shortcuts import render, redirect
-from users.forms import UserRegisterForm
-from users.models import User, UserProfile
-from users.utils import register_confirm
 from .forms import UserProfileForm
+from django.conf import settings
+from django.views import View
 
 
 class ProfileView(View):
