@@ -1,12 +1,14 @@
 # mailing_service/models.py
-from django.db import models
 from django.utils import timezone
+from users.models import User
+from django.db import models
 
 
 class Client(models.Model):
     email = models.EmailField(unique=True)
     full_name = models.CharField(max_length=100, unique=True)
     comment = models.TextField(blank=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_clients')
 
     def __str__(self):
         return self.email
@@ -33,6 +35,7 @@ class Mailing(models.Model):
     frequency = models.CharField(choices=FREQUENCY_CHOICES, default='daily', max_length=20)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='created')
     time_of_day = models.TimeField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_mailings')
 
     def __str__(self):
         return self.title
@@ -70,6 +73,7 @@ class Message(models.Model):
     mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE)
     subject = models.CharField(max_length=355)
     body = models.TextField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_messages')
 
     def __str__(self):
         return self.subject
