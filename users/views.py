@@ -17,7 +17,6 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from mailing_service.models import Mailing
-from users.models import User
 
 
 class ModeratorDashboardView(PermissionRequiredMixin, View):
@@ -56,13 +55,22 @@ class ModeratorDashboardView(PermissionRequiredMixin, View):
             # После разблокировки пользователя перенаправляем на страницу с пользователями
             return redirect(reverse('users:moderator_dashboard'))
 
-        # Проверяем, был ли передан POST-запрос для отключения рассылки
-        elif 'disable_mailing' in request.POST:
+        # Проверяем, был ли передан POST-запрос для блокировки рассылки
+        elif 'block_mailing' in request.POST:
             mailing_id = request.POST.get('mailing_id')
             mailing = get_object_or_404(Mailing, id=mailing_id)
-            mailing.is_active = False
+            mailing.status = 'blocked'
             mailing.save()
-            # После отключения рассылки перенаправляем на страницу с пользователями
+            # После блокировки рассылки перенаправляем на страницу с рассылками
+            return redirect(reverse('users:moderator_dashboard'))
+
+        # Проверяем, был ли передан POST-запрос для разблокировки рассылки
+        elif 'unblock_mailing' in request.POST:
+            mailing_id = request.POST.get('mailing_id')
+            mailing = get_object_or_404(Mailing, id=mailing_id)
+            mailing.status = 'started'
+            mailing.save()
+            # После разблокировки рассылки перенаправляем на страницу с рассылками
             return redirect(reverse('users:moderator_dashboard'))
 
         return render(request, 'users/moderator_dashboard.html', {'users': users, 'mailings': mailings})
