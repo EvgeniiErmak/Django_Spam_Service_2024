@@ -16,6 +16,8 @@ from django.views import View
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from mailing_service.models import Mailing
+from users.models import User
 
 
 class ModeratorDashboardView(PermissionRequiredMixin, View):
@@ -25,12 +27,16 @@ class ModeratorDashboardView(PermissionRequiredMixin, View):
     def get(self, request):
         # Получаем список всех пользователей
         users = User.objects.all()
-        # Передаем значение has_perm в контекст шаблона
-        return render(request, 'users/moderator_dashboard.html', {'users': users, 'has_perm_can_view_dashboard': request.user.has_perm('users.can_view_dashboard')})
+        # Получаем список всех рассылок
+        mailings = Mailing.objects.all()
+        # Передаем значения в контекст шаблона
+        return render(request, 'users/moderator_dashboard.html', {'users': users, 'mailings': mailings, 'has_perm_can_view_dashboard': request.user.has_perm('users.can_view_dashboard')})
 
     def post(self, request):
         # Получаем список всех пользователей
         users = User.objects.all()
+        # Получаем список всех рассылок
+        mailings = Mailing.objects.all()
 
         # Проверяем, был ли передан POST-запрос для блокировки пользователя
         if 'block_user' in request.POST:
@@ -50,7 +56,16 @@ class ModeratorDashboardView(PermissionRequiredMixin, View):
             # После разблокировки пользователя перенаправляем на страницу с пользователями
             return redirect(reverse('users:moderator_dashboard'))
 
-        return render(request, 'users/moderator_dashboard.html', {'users': users})
+        # Проверяем, был ли передан POST-запрос для отключения рассылки
+        elif 'disable_mailing' in request.POST:
+            mailing_id = request.POST.get('mailing_id')
+            mailing = get_object_or_404(Mailing, id=mailing_id)
+            mailing.is_active = False
+            mailing.save()
+            # После отключения рассылки перенаправляем на страницу с пользователями
+            return redirect(reverse('users:moderator_dashboard'))
+
+        return render(request, 'users/moderator_dashboard.html', {'users': users, 'mailings': mailings})
 
 
 class ProfileView(View):

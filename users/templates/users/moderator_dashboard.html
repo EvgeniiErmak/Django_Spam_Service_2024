@@ -8,6 +8,7 @@
 {% block content %}
     <div class="container">
         <h1 class="mt-5 mb-4">Панель управления модератора</h1>
+        <h2 class="mb-3">Список пользователей</h2>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -25,17 +26,17 @@
                     <td>{% if user.is_active %}Активен{% else %}Заблокирован{% endif %}</td>
                     <td>
                         {% if user.is_active %}
-                        <form method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="user_id" value="{{ user.id }}">
-                            <button type="submit" name="block_user" class="btn btn-danger btn-sm">Заблокировать</button>
-                        </form>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
+                                <button type="submit" name="block_user" class="btn btn-danger btn-sm">Заблокировать</button>
+                            </form>
                         {% else %}
-                        <form method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="user_id" value="{{ user.id }}">
-                            <button type="submit" name="unblock_user" class="btn btn-success btn-sm">Разблокировать</button>
-                        </form>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
+                                <button type="submit" name="unblock_user" class="btn btn-success btn-sm">Разблокировать</button>
+                            </form>
                         {% endif %}
                     </td>
                 </tr>
@@ -43,26 +44,36 @@
             </tbody>
         </table>
     </div>
+
     <div class="container mt-3">
         <h2 class="mt-4 mb-3">Список рассылок</h2>
         <ul class="list-group">
             {% for mailing in mailings %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 {{ mailing.title }}
-                <div>
-                    {% if not user.is_superuser %}
-                    <form method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="mailing_id" value="{{ mailing.id }}">
-                        <button type="submit" name="disable_mailing" class="btn btn-danger btn-sm">Отключить</button>
-                    </form>
+                <span class="badge badge-primary badge-pill">{{ mailing.clients.count }}</span>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="mailing_id" value="{{ mailing.id }}">
+                    {% if mailing.status == 'created' %}
+                        <button type="submit" name="activate_mailing" class="btn btn-success btn-sm">Активировать</button>
+                    {% elif mailing.status == 'started' %}
+                        <button type="submit" name="complete_mailing" class="btn btn-warning btn-sm">Завершить</button>
+                    {% else %}
+                        <button type="button" class="btn btn-secondary btn-sm" disabled>Завершена</button>
                     {% endif %}
-                </div>
+                </form>
+                <ul>
+                    <li>Начало рассылки: {{ mailing.start_time }}</li>
+                    <li>Конец рассылки: {% if mailing.end_time %}{{ mailing.end_time }}{% else %}Не завершена{% endif %}</li>
+                    <li>Статус: {{ mailing.status }}</li>
+                </ul>
             </li>
             {% endfor %}
         </ul>
     </div>
+
     <div class="container mt-3">
-        <a href="{% url 'mailing_service:home' %}" class="btn btn-secondary">На главную</a>
+        <a href="{% url 'mailing_service:home' %}" class="btn btn-primary">На главную</a>
     </div>
 {% endblock %}
