@@ -29,7 +29,9 @@
                                 <td>{{ mailing.get_status_display }}</td>
                                 <td>
                                     <a href="{% url 'mailing_service:mailing_update' mailing.pk %}" class="btn btn-sm btn-primary">Редактировать</a>
+                                    <div class="mt-2">
                                     <a href="{% url 'mailing_service:mailing_delete' mailing.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+                                    <div class="mt-2">
                                     <a href="{% url 'mailing_service:mailing_detail' mailing.pk %}" class="btn btn-sm btn-info">Подробно</a>
                                 </td>
                             </tr>

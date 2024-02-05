@@ -255,7 +255,7 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['total_mailings'] = Mailing.objects.count()  # Количество рассылок всего
-        context['active_mailings'] = Mailing.objects.filter(status='active').count()  # Количество активных рассылок
+        context['active_mailings'] = Mailing.objects.filter(status='started').count()  # Количество активных рассылок
         context['unique_clients'] = Client.objects.count()  # Количество уникальных клиентов
         context['latest_posts'] = Post.objects.order_by('-publication_date')[:3]  # Три последние статьи блога
         context['most_viewed_posts'] = Post.objects.order_by('-views')[:3]  # Три самые просматриваемые статьи блога

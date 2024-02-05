@@ -22,7 +22,7 @@
   </div>
   <a class="btn btn-primary" href="{% url 'users:profile_update' %}">Редактировать профиль</a>
   <a class="btn btn-primary" href="{% url 'mailing_service:home' %}">Вернуться на главную</a>
-  <div class="mb-3"></div>
+  <div class="mb-2"></div>
   <form action="{% url 'users:logout' %}" method="post">
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">Выход</button>
