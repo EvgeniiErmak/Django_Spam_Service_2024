@@ -69,6 +69,8 @@ class ClientCreateView(CreateView):
     success_url = reverse_lazy('mailing_service:client_list')
 
     def form_valid(self, form):
+        form.instance.created_by = self.request.user  # Устанавливаем пользователя как создателя клиента
+
         email = form.cleaned_data['email']
         full_name = form.cleaned_data['full_name']
 
@@ -140,6 +142,7 @@ class MailingCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+        self.object.created_by = self.request.user  # Устанавливаем пользователя как создателя рассылки
         self.object.activate_mailing()  # Активировать рассылку при создании
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
