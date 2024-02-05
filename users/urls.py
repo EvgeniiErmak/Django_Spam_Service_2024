@@ -1,6 +1,6 @@
 # users/urls.py
 from users.views import RegisterView, verify_view, EmailVerifyView
-from .views import ProfileView, ProfileUpdateView, ModeratorDashboardView
+from .views import ProfileView, ProfileUpdateView, ModeratorDashboardView, DeleteAccountView
 from django.conf.urls.static import static
 from django.urls import path, reverse_lazy
 from users.apps import UsersConfig
@@ -42,6 +42,8 @@ urlpatterns = [
     path('profile/update/', ProfileUpdateView.as_view(), name='profile_update'),
 
     path('moderator_dashboard/', ModeratorDashboardView.as_view(), name='moderator_dashboard'),
+
+    path('delete-account/', DeleteAccountView.as_view(), name='delete_account_confirm'),
 ]
 
 if settings.DEBUG:

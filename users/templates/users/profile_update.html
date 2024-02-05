@@ -56,5 +56,18 @@
     <div class="mt-2">
       <a class="btn btn-primary" href="{% url 'users:profile' %}">Вернуться к профилю</a>
     </div>
+
+    <!-- Delete Account Button -->
+    <div class="mt-2">
+      <a class="btn btn-danger" href="{% url 'users:delete_account_confirm' %}">Удалить аккаунт</a>
+    </div>
+
+    <!-- Logout Button -->
+    <div class="mt-2">
+      <form action="{% url 'users:logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Выход</button>
+      </form>
+    </div>
   </div>
 {% endblock %}

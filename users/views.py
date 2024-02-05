@@ -13,10 +13,13 @@ from django.urls import reverse_lazy
 from .forms import UserProfileForm
 from django.conf import settings
 from django.views import View
+from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from mailing_service.models import Mailing
+from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class ModeratorDashboardView(PermissionRequiredMixin, View):
@@ -204,3 +207,18 @@ class CustomLoginView(LoginView):
 
 class LogoutView(DjangoLogoutView):
     template_name = 'users/logout.html'
+
+
+class DeleteAccountView(LoginRequiredMixin, View):
+    template_name = 'users/delete_account_confirm.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        # Удаление аккаунта пользователя
+        request.user.delete()
+
+        messages.success(request, 'Ваш аккаунт успешно удален.')
+        logout(request)
+        return redirect('mailing_service:home')
