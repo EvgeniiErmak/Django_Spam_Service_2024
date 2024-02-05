@@ -1,6 +1,8 @@
 # mailing_service/forms.py
-from django import forms
+from bootstrap_datepicker_plus.widgets import DateTimePickerInput
 from .models import Client, Mailing, Message
+from django.forms import TimeInput
+from django import forms
 
 
 class ClientForm(forms.ModelForm):
@@ -28,24 +30,16 @@ class ClientDeleteConfirmationForm(forms.ModelForm):
 
 
 class MailingForm(forms.ModelForm):
-    time_of_day = forms.TimeField(
-        widget=forms.TimeInput(
-            attrs={
-                'class': 'form-control datetimepicker',
-                'placeholder': 'HH:MM',
-            }
-        )
-    )
+    time_of_day = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
 
     class Meta:
         model = Mailing
         fields = ['title', 'content', 'clients', 'start_time', 'end_time', 'frequency', 'status', 'time_of_day']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['start_time'].widget.attrs['class'] = 'form-control datetimepicker'
-        self.fields['end_time'].widget.attrs['class'] = 'form-control datetimepicker'
-        self.fields['time_of_day'].widget.attrs['class'] = 'form-control datetimepicker'
+        widgets = {
+            'start_time': DateTimePickerInput(),
+            'end_time': DateTimePickerInput(),
+            'time_of_day': TimeInput(attrs={'class': 'form-control datetimepicker'}),
+        }
 
     def clean(self):
         cleaned_data = super().clean()
