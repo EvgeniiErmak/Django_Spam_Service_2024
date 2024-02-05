@@ -139,34 +139,36 @@ class MailingCreateView(CreateView):
     success_url = reverse_lazy('mailing_service:mailing_list')
 
     def form_valid(self, form):
-        result = super().form_valid(form)
-        try:
-            # Запланировать рассылку для новой рассылки
-            EmailTask.scheduler.add_job(
-                EmailTask.send_emails,
-                'date',
-                run_date=self.object.start_time,  # Запуск по времени начала рассылки
-                args=[self.object.id],  # Передать ID рассылки для отправки
-                timezone='Europe/Moscow'
-            )
-        except Exception as e:
-            messages.error(self.request, f'Ошибка при отправке рассылки: {e}')
-        return result
+        self.object = form.save(commit=False)
+        self.object.activate_mailing()  # Активировать рассылку при создании
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class MailingBlockView(UpdateView):
+    model = Mailing
+    fields = []
+
+    def post(self, request, *args, **kwargs):
+        mailing = self.get_object()
+        mailing.block_mailing()
+        return HttpResponseRedirect(reverse_lazy('mailing_service:mailing_list'))
+
+
+class MailingUnblockView(UpdateView):
+    model = Mailing
+    fields = []
+
+    def post(self, request, *args, **kwargs):
+        mailing = self.get_object()
+        mailing.unblock_mailing()
+        return HttpResponseRedirect(reverse_lazy('mailing_service:mailing_list'))
 
 
 class MailingDetailView(DetailView):
     model = Mailing
     template_name = 'mailing_service/mailing_detail.html'
     context_object_name = 'mailing'
-
-
-class SentMailingsReportView(TemplateView):
-    template_name = 'mailing_service/sent_mailings_report.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['sent_mailings'] = Mailing.objects.filter(status='completed')
-        return context
 
 
 class MailingUpdateView(UpdateView):
@@ -259,4 +261,13 @@ class HomeView(TemplateView):
         context['unique_clients'] = Client.objects.count()  # Количество уникальных клиентов
         context['latest_posts'] = Post.objects.order_by('-publication_date')[:3]  # Три последние статьи блога
         context['most_viewed_posts'] = Post.objects.order_by('-views')[:3]  # Три самые просматриваемые статьи блога
+        return context
+
+
+class SentMailingsReportView(TemplateView):
+    template_name = 'mailing_service/sent_mailings_report.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sent_mailings'] = Mailing.objects.filter(status='completed')
         return context

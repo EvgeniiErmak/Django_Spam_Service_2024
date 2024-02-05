@@ -37,7 +37,6 @@ class Mailing(models.Model):
     def __str__(self):
         return self.title
 
-
     def set_created_status(self):
         self.status = 'created'
         self.save()
@@ -57,6 +56,14 @@ class Mailing(models.Model):
     def complete_mailing(self):
         self.end_time = timezone.now()
         self.set_completed_status()
+
+    def block_mailing(self):
+        self.status = 'blocked'
+        self.save()
+
+    def unblock_mailing(self):
+        self.status = 'created'
+        self.save()
 
 
 class Message(models.Model):
