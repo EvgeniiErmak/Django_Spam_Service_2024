@@ -1,4 +1,5 @@
 # mailing_service/urls.py
+from django.contrib.auth.decorators import login_required
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
@@ -55,6 +56,11 @@ urlpatterns = [
 
     path('send-test-email/', send_test_email_view, name='send_test_email'),
 ]
+
+# Обернем все URL-пути, кроме 'home' и 'blog', декоратором login_required
+for urlpattern in urlpatterns:
+    if urlpattern.name not in ['home', 'blog']:  # Исключаем 'home' и 'blog'
+        urlpattern.callback = login_required(urlpattern.callback)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
