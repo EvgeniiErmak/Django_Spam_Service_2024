@@ -5,6 +5,12 @@
 
 {% block content %}
   <h1>Список постов блога</h1>
+
+  <!-- Добавляем кнопку "Создать статью" -->
+  {% if user_in_content_managers_group %}
+    <a href="{% url 'blog:post_create' %}" class="btn btn-primary">Создать статью</a>
+  {% endif %}
+
   <div class="posts">
     {% for post in posts %}
       <div class="post">

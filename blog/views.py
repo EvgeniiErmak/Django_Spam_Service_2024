@@ -1,15 +1,27 @@
 # blog/views.py
-from django.views.generic import ListView, DetailView
-from .models import Post
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
+from .forms import PostForm
+from .models import Post
 
 
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'blog/post_list.html'
     context_object_name = 'posts'
-    ordering = ['-publication_date']  # Сортировка по дате публикации
-    paginate_by = 4  # Пагинация (по умолчанию 4 постов на странице)
+    ordering = ['-publication_date']
+    paginate_by = 4
+
+    def get_queryset(self):
+        return Post.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_in_content_managers_group'] = self.request.user.groups.filter(name='Content Managers').exists()
+        return context
 
 
 class PostDetailView(DetailView):
@@ -25,3 +37,23 @@ class PostDetailView(DetailView):
         post.save()
 
         return super().get(request, *args, **kwargs)
+
+
+class PostCreateView(UserPassesTestMixin, CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/post_form.html'
+    success_url = reverse_lazy('blog:post_list')
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='Content Managers').exists()
+
+
+class PostUpdateView(UserPassesTestMixin, UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/post_form.html'
+    success_url = reverse_lazy('blog:post_list')
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='Content Managers').exists()

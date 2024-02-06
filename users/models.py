@@ -1,5 +1,5 @@
 # users/models.py
-from django.contrib.auth.models import AbstractUser, User
+from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
 
 NULLABLE = {'blank': True, 'null': True}
@@ -18,6 +18,9 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ['username']
 
+    def __str__(self):
+        return self.username
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -28,3 +31,7 @@ class UserProfile(models.Model):
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     username = models.CharField(max_length=150, blank=True)
+
+
+# Добавляем новую группу пользователей для контент-менеджеров
+Group.objects.get_or_create(name='Content Managers')
