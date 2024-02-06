@@ -1,25 +1,25 @@
 # users/views.py
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, LogoutView as DjangoLogoutView
 from django.contrib.auth.tokens import default_token_generator as token_generator
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, TemplateView
 from django.utils.http import urlsafe_base64_decode
 from django.core.exceptions import ValidationError
 from django.contrib.auth.views import LoginView
+from mailing_service.models import Mailing
 from users.models import User, UserProfile
 from users.forms import UserRegisterForm
 from users.utils import register_confirm
+from django.contrib.auth import logout
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
+from django.contrib import messages
 from .forms import UserProfileForm
 from django.conf import settings
-from django.views import View
-from django.contrib import messages
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from mailing_service.models import Mailing
-from django.contrib.auth import logout
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
 
 
 class ModeratorDashboardView(PermissionRequiredMixin, View):

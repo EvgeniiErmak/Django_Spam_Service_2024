@@ -8,8 +8,8 @@ from django.views.generic import DetailView
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.http import HttpResponse
-from django.conf import settings
 from django.contrib import messages
+from django.conf import settings
 from django.db.models import Q
 from .tasks import EmailTask
 from blog.models import Post
