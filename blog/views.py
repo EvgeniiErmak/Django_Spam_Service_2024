@@ -20,7 +20,9 @@ class PostListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_in_content_managers_group'] = self.request.user.groups.filter(name='Content Managers').exists()
+        user_in_content_managers_group = self.request.user.groups.filter(name='Content Managers').exists()
+        print("User in Content Managers group:", user_in_content_managers_group)  # Отладочная информация
+        context['user_in_content_managers_group'] = user_in_content_managers_group
         return context
 
 
@@ -38,6 +40,13 @@ class PostDetailView(DetailView):
 
         return super().get(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_in_content_managers_group = self.request.user.groups.filter(name='Content Managers').exists()
+        print("User in Content Managers group:", user_in_content_managers_group)  # Отладочная информация
+        context['user_in_content_managers_group'] = user_in_content_managers_group
+        return context
+
 
 class PostCreateView(UserPassesTestMixin, CreateView):
     model = Post
@@ -48,6 +57,13 @@ class PostCreateView(UserPassesTestMixin, CreateView):
     def test_func(self):
         return self.request.user.groups.filter(name='Content Managers').exists()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_in_content_managers_group = self.request.user.groups.filter(name='Content Managers').exists()
+        print("User in Content Managers group:", user_in_content_managers_group)  # Отладочная информация
+        context['user_in_content_managers_group'] = user_in_content_managers_group
+        return context
+
 
 class PostUpdateView(UserPassesTestMixin, UpdateView):
     model = Post
@@ -57,3 +73,10 @@ class PostUpdateView(UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         return self.request.user.groups.filter(name='Content Managers').exists()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_in_content_managers_group = self.request.user.groups.filter(name='Content Managers').exists()
+        print("User in Content Managers group:", user_in_content_managers_group)  # Отладочная информация
+        context['user_in_content_managers_group'] = user_in_content_managers_group
+        return context
