@@ -24,12 +24,13 @@ from django.views.generic import (
 )
 
 
-class ClientListView(ListView):
+class ClientListView(LoginRequiredMixin, ListView):
     model = Client
     template_name = 'mailing_service/client_list.html'
+    context_object_name = 'clients'
 
     def get_queryset(self):
-        return Client.objects.all()
+        return Client.objects.filter(created_by=self.request.user)
 
     def post(self, request, *args, **kwargs):
         selected_clients = request.POST.getlist('selected_clients[]')
@@ -45,7 +46,7 @@ class ClientListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['clients'] = Client.objects.all()
+        context['clients'] = self.get_queryset()
         return context
 
 
@@ -70,8 +71,7 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('mailing_service:client_list')
 
     def form_valid(self, form):
-        form.instance.created_by = self.request.user  # Устанавливаем пользователя как создателя клиента
-
+        form.instance.created_by = self.request.user
         email = form.cleaned_data['email']
         full_name = form.cleaned_data['full_name']
 
@@ -82,7 +82,7 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ClientUpdateView(UpdateView):
+class ClientUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
     form_class = ClientForm
     template_name = 'mailing_service/client_form.html'
@@ -117,7 +117,7 @@ class ClientDeleteView(View):
         return HttpResponseRedirect(self.success_url)
 
 
-class LogListView(ListView):
+class LogListView(LoginRequiredMixin, ListView):
     model = Log
     template_name = 'mailing_service/log_list.html'
     context_object_name = 'logs'
@@ -127,12 +127,13 @@ class LogListView(ListView):
         return Log.objects.all().order_by('-attempt_time')
 
 
-class MailingListView(ListView):
+class MailingListView(LoginRequiredMixin, ListView):
     model = Mailing
     template_name = 'mailing_service/mailing_list.html'
+    context_object_name = 'mailings'
 
     def get_queryset(self):
-        return Mailing.objects.all()
+        return Mailing.objects.filter(created_by=self.request.user)
 
 
 class MailingCreateView(LoginRequiredMixin, CreateView):
@@ -143,8 +144,8 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.created_by = self.request.user  # Устанавливаем пользователя как создателя рассылки
-        self.object.activate_mailing()  # Активировать рассылку при создании
+        self.object.created_by = self.request.user
+        self.object.activate_mailing()
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -184,7 +185,7 @@ class MailingUpdateView(UpdateView):
     def form_valid(self, form):
         result = super().form_valid(form)
         try:
-            EmailTask.send_emails()  # Запустить рассылку
+            EmailTask.send_emails()
         except Exception as e:
             messages.error(self.request, f'Ошибка при отправке рассылки: {e}')
         return result
@@ -205,9 +206,10 @@ class MailingDeleteView(DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-class MessageListView(ListView):
+class MessageListView(LoginRequiredMixin, ListView):
     model = Message
     template_name = 'mailing_service/message_list.html'
+    context_object_name = 'messages'
 
     def get_queryset(self):
         return Message.objects.all()
@@ -220,7 +222,7 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('mailing_service:message_list')
 
     def form_valid(self, form):
-        form.instance.created_by = self.request.user  # Устанавливаем пользователя как создателя сообщения
+        form.instance.created_by = self.request.user
         return super().form_valid(form)
 
 
@@ -264,11 +266,11 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['total_mailings'] = Mailing.objects.count()  # Количество рассылок всего
-        context['active_mailings'] = Mailing.objects.filter(status='started').count()  # Количество активных рассылок
-        context['unique_clients'] = Client.objects.count()  # Количество уникальных клиентов
-        context['latest_posts'] = Post.objects.order_by('-publication_date')[:3]  # Три последние статьи блога
-        context['most_viewed_posts'] = Post.objects.order_by('-views')[:3]  # Три самые просматриваемые статьи блога
+        context['total_mailings'] = Mailing.objects.count()
+        context['active_mailings'] = Mailing.objects.filter(status='started').count()
+        context['unique_clients'] = Client.objects.count()
+        context['latest_posts'] = Post.objects.order_by('-publication_date')[:3]
+        context['most_viewed_posts'] = Post.objects.order_by('-views')[:3]
         return context
 
 
