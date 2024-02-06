@@ -1,5 +1,6 @@
 # mailing_service/views.py
 from .forms import ClientForm, MailingForm, MessageForm, ClientDeleteConfirmationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Client, Mailing, Message, Log
 from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect
@@ -62,7 +63,7 @@ class ClientDeleteConfirmationView(FormView):
             return HttpResponseRedirect(self.success_url)
 
 
-class ClientCreateView(CreateView):
+class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Client
     form_class = ClientForm
     template_name = 'mailing_service/client_form.html'
@@ -134,7 +135,7 @@ class MailingListView(ListView):
         return Mailing.objects.all()
 
 
-class MailingCreateView(CreateView):
+class MailingCreateView(LoginRequiredMixin, CreateView):
     model = Mailing
     form_class = MailingForm
     template_name = 'mailing_service/mailing_form.html'
@@ -212,11 +213,15 @@ class MessageListView(ListView):
         return Message.objects.all()
 
 
-class MessageCreateView(CreateView):
+class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Message
     form_class = MessageForm
     template_name = 'mailing_service/message_form.html'
     success_url = reverse_lazy('mailing_service:message_list')
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user  # Устанавливаем пользователя как создателя сообщения
+        return super().form_valid(form)
 
 
 class MessageUpdateView(UpdateView):
