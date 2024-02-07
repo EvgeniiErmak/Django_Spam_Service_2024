@@ -3,7 +3,6 @@
 │   ├── __init__.py
 │   ├── asgi.py
 │   ├── settings.py
-│   ├── templates
 │   ├── urls.py
 │   └── wsgi.py
 ├── README.md
@@ -16,6 +15,7 @@
 │   ├── templates
 │   │   └── blog
 │   │       ├── post_detail.html
+│   │       ├── post_form.html
 │   │       └── post_list.html
 │   ├── tests.py
 │   ├── urls.py
@@ -27,8 +27,8 @@
 │   ├── forms.py
 │   ├── management
 │   │   └── commands
+│   │       └── runapscheduler.py
 │   ├── models.py
-│   ├── service.py
 │   ├── tasks.py
 │   ├── templates
 │   │   └── mailing_service
@@ -44,7 +44,6 @@
 │   │       ├── mailing_detail.html
 │   │       ├── mailing_form.html
 │   │       ├── mailing_list.html
-│   │       ├── mailing_list_form.html
 │   │       ├── mailing_list_list.html
 │   │       ├── message_delete.html
 │   │       ├── message_form.html
@@ -57,26 +56,27 @@
 │   ├── utils.py
 │   └── views.py
 ├── manage.py
-├── media
-│   └── images
 ├── poetry.lock
 ├── project_structure.txt
 ├── pyproject.toml
-├── requirements.txt
 └── users
     ├── __init__.py
     ├── admin.py
     ├── apps.py
+    ├── context_processors.py
     ├── forms.py
     ├── management
     │   └── commands
     │       └── create_super_user.py
     ├── models.py
+    ├── permissions.py
     ├── templates
     │   └── users
+    │       ├── delete_account_confirm.html
     │       ├── incorrect_verify.html
     │       ├── login.html
     │       ├── logout.html
+    │       ├── moderator_dashboard.html
     │       ├── password_reset.html
     │       ├── password_reset_complete.html
     │       ├── password_reset_confirm.html
@@ -87,9 +87,10 @@
     │       ├── register.html
     │       ├── verified_email.html
     │       └── verify_email.html
+    ├── templatetags
     ├── tests.py
     ├── urls.py
     ├── utils.py
     └── views.py
 
-19 directories, 74 files
+17 directories, 77 files
