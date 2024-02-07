@@ -190,7 +190,7 @@ class MailingUpdateView(UpdateView):
     def form_valid(self, form):
         result = super().form_valid(form)
         try:
-            EmailTask.send_emails()
+            EmailTask.send_emails(self.object.id)
         except Exception as e:
             messages.error(self.request, f'Ошибка при отправке рассылки: {e}')
         return result

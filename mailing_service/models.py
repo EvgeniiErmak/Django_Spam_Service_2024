@@ -53,8 +53,9 @@ class Mailing(models.Model):
         self.save()
 
     def activate_mailing(self):
-        self.start_time = timezone.now()
-        self.set_started_status()
+        if self.status != 'started':
+            self.start_time = timezone.now()
+            self.set_started_status()
 
     def complete_mailing(self):
         self.end_time = timezone.now()
