@@ -8,8 +8,8 @@ from .utils import EmailSender
 
 
 class EmailTask:
-    #scheduler = BackgroundScheduler()
-    #scheduler.add_jobstore(DjangoJobStore(), "default")
+    scheduler = BackgroundScheduler()
+    scheduler.add_jobstore(DjangoJobStore(), "default")
 
     @classmethod
     def start(cls):
