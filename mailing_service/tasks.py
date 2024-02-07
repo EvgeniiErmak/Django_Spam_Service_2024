@@ -6,18 +6,18 @@ from .models import Mailing, Message, Log
 from django.utils import timezone
 from .utils import EmailSender
 
+# Создаем экземпляр планировщика задач APScheduler
+scheduler = BackgroundScheduler()
+scheduler.add_jobstore(DjangoJobStore(), "default")
+
 
 class EmailTask:
-    scheduler = BackgroundScheduler()
-    scheduler.add_jobstore(DjangoJobStore(), "default")
-
     @classmethod
     def start(cls):
-        cls.scheduler.start()
+        scheduler.start()
 
     @classmethod
     def send_emails(cls, mailing_id):
-        print(123)
         current_time = timezone.now()
         try:
             mailing = Mailing.objects.get(id=mailing_id)
@@ -42,4 +42,7 @@ class EmailTask:
 
     @classmethod
     def stop(cls):
-        cls.scheduler.shutdown()
+        scheduler.shutdown()
+
+
+scheduler.add_job(EmailTask.send_emails, 'interval', minutes=1, args=['mailing_id'])
